@@ -16,7 +16,7 @@
             <div class="panel">
                 <div class="panel-body">
 
-                    <form id="form-validator" class="form-horizontal" method="POST" action="{{ route('administrator.users.password.update', $user->id) }}">
+                    <form id="form-validator" class="form-horizontal" method="POST" action="{{ route('admin.users.password.update', $user->id) }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="PUT">
 

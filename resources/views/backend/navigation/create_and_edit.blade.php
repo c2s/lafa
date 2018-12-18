@@ -35,7 +35,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-body">
-                    <form id="form-validator" class="form-horizontal" method="POST"action="{{ $navigation->id ? route('administrator.navigation.update', [$navigation->id, $category]) : route('administrator.navigation.store', $category) }}?redirect={{ previous_url() }}">
+                    <form id="form-validator" class="form-horizontal" method="POST"action="{{ $navigation->id ? route('admin.navigation.update', [$navigation->id, $category]) : route('admin.navigation.store', $category) }}?redirect={{ previous_url() }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="{{ $navigation->id ? 'PUT' : 'POST' }}">
 

@@ -7,7 +7,7 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Support\Facades\Crypt;
 use App\Support\LogViewer;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
  * Log 控制器
  *
  * Class LogViewerController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class LogViewerController extends Controller
 {
@@ -47,7 +47,7 @@ class LogViewerController extends Controller
             $log = $log->where('type', '=', $type);
         }
 
-        $logs = $log->where('group',$group)->orderBy('id','desc')->paginate(config('administrator.paginate.limit'));
+        $logs = $log->where('group',$group)->orderBy('id','desc')->paginate(config('admin.paginate.limit'));
         return backend_view('log.index', compact('types','logs', 'title'));
     }
 

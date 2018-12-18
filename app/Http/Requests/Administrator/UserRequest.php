@@ -13,7 +13,7 @@
  *
  */
 
-namespace App\Http\Requests\Administrator;
+namespace App\Http\Requests\Backend;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Auth;

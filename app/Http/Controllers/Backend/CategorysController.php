@@ -7,9 +7,9 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
-use App\Http\Requests\Administrator\CategoryRequest;
+use App\Http\Requests\Backend\CategoryRequest;
 use App\Models\Category;
 use App\Handlers\CategoryHandler;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
  * 分类控制器
  *
  * Class CategorysController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class CategorysController extends Controller
 {
@@ -81,7 +81,7 @@ class CategorysController extends Controller
 
         $category = Category::create($request->all());
 
-        return $this->redirect('administrator.category.index',$type)->with('success', '添加成功.');
+        return $this->redirect('admin.category.index',$type)->with('success', '添加成功.');
     }
 
     /**
@@ -115,7 +115,7 @@ class CategorysController extends Controller
 
         $category->update($request->all());
 
-        return $this->redirect('administrator.category.index',$type)->with('success', '更新成功.');
+        return $this->redirect('admin.category.index',$type)->with('success', '更新成功.');
     }
 
     /**
@@ -157,6 +157,6 @@ class CategorysController extends Controller
             $category->where('id',$id)->update(['order' => $order[$k] ?? 999 ]);
         }
 
-        return redirect()->route('administrator.category.index', $type)->with('success', '操作成功.');
+        return redirect()->route('admin.category.index', $type)->with('success', '操作成功.');
     }
 }

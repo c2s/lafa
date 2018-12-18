@@ -7,7 +7,7 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Models\Setting;
@@ -16,7 +16,7 @@ use App\Models\Setting;
  * 站点相关信息控制器
  *
  * Class SiteController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class SiteController extends Controller
 {
@@ -56,7 +56,7 @@ class SiteController extends Controller
         $data = $request->only('status', 'close_tips', 'name', 'create_year', 'copyright','keywords','index_keywords','slogan','icp','icp_link','meta','description','statistics', 'map');
         $setting->store($data,'basic','common','system');
 
-        return redirect()->route('administrator.site.basic')->with('success', '保存成功.');
+        return redirect()->route('admin.site.basic')->with('success', '保存成功.');
     }
 
     /**
@@ -89,7 +89,7 @@ class SiteController extends Controller
         $data = $request->only('name', 'description', 'content');
         $setting->store($data,'company','common','system');
 
-        return redirect()->route('administrator.site.company')->with('success', '保存成功.');
+        return redirect()->route('admin.site.company')->with('success', '保存成功.');
     }
 
     /**
@@ -122,7 +122,7 @@ class SiteController extends Controller
         $data = $request->only('contacts', 'phone','fax','email','qq','weixin','weibo','wangwang','site','address');
         $setting->store($data,'contact','common','system');
 
-        return redirect()->route('administrator.site.contact')->with('success', '保存成功.');
+        return redirect()->route('admin.site.contact')->with('success', '保存成功.');
     }
 
 }

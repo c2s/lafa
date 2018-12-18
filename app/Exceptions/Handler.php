@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof AuthorizationException) {
-            return redirect()->guest(route('administrator.permission-denied'));
+            return redirect()->guest(route('admin.permission-denied'));
         }
         return parent::render($request, $exception);
     }
@@ -63,8 +63,8 @@ class Handler extends ExceptionHandler
     {
         // 自定义后台登录跳转
         $action = $request->route()->getAction();
-        $redirectUrl = (isset($action['domain']) && config('administrator.domain') == $action['domain']) || ( isset($action['prefix']) && '/'. config('administrator.domain') == $action['prefix']) ?
-            route('administrator.login') : route('login');
+        $redirectUrl = (isset($action['domain']) && config('admin.domain') == $action['domain']) || ( isset($action['prefix']) && '/'. config('admin.domain') == $action['prefix']) ?
+            route('admin.login') : route('login');
 
         return $request->expectsJson()
             ? response()->json(['message' => $exception->getMessage()], 401)

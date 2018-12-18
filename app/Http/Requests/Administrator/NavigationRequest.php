@@ -13,7 +13,7 @@
  *
  */
 
-namespace App\Http\Requests\Administrator;
+namespace App\Http\Requests\Backend;
 
 use Illuminate\Validation\Rule;
 use Illuminate\Routing\Router;

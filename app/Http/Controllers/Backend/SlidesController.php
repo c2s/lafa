@@ -7,17 +7,17 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Slide;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\SlideRequest;
+use App\Http\Requests\Backend\SlideRequest;
 
 /**
  * 幻灯片控制器
  *
  * Class SlidesController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class SlidesController extends Controller
 {
@@ -57,7 +57,7 @@ class SlidesController extends Controller
         $this->authorize('manage', $slide);
 
         $slideConfig = $this->checkGroup($group);
-        $slides = $slide->where('group',$group)->ordered()->recent()->paginate((config('administrator.paginate.limit')));
+        $slides = $slide->where('group',$group)->ordered()->recent()->paginate((config('admin.paginate.limit')));
 
         return backend_view('slides.manage', compact('slides','slideConfig', 'group'));
     }

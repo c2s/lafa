@@ -7,20 +7,20 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
-use App\Http\Requests\Administrator\UserRequest;
+use App\Http\Requests\Backend\UserRequest;
 use App\Handlers\UploadHandler;
 
 /**
  * 用户操作控制器
  *
  * Class UserController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class UserController extends Controller
 {

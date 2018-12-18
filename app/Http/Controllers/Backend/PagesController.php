@@ -7,17 +7,17 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Page;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\PageRequest;
+use App\Http\Requests\Backend\PageRequest;
 
 /**
  * 页面控制器
  *
  * Class PagesController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class PagesController extends Controller
 {
@@ -37,7 +37,7 @@ class PagesController extends Controller
     {
         $this->authorize('index', $page);
 
-        $pages = $page->filterWith()->ordered()->recent()->paginate(config('administrator.paginate.limit'));
+        $pages = $page->filterWith()->ordered()->recent()->paginate(config('admin.paginate.limit'));
 
         return backend_view('pages.index', compact('pages'));
     }

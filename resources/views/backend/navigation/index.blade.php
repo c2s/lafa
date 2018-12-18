@@ -14,9 +14,9 @@
 
 @section('tab')
 <ul class="nav nav-tabs">
-    <li class="@if($category == 'desktop') active @endif"><a href="{{ route('administrator.navigation.index', 'desktop') }}">主导航</a></li>
-    <li class="@if($category == 'footer') active @endif"><a href="{{ route('administrator.navigation.index', 'footer') }}">底部导航</a></li>
-    <li class="@if($category == 'mobile') active @endif"><a href="{{ route('administrator.navigation.index', 'mobile') }}">手机导航</a></li>
+    <li class="@if($category == 'desktop') active @endif"><a href="{{ route('admin.navigation.index', 'desktop') }}">主导航</a></li>
+    <li class="@if($category == 'footer') active @endif"><a href="{{ route('admin.navigation.index', 'footer') }}">底部导航</a></li>
+    <li class="@if($category == 'mobile') active @endif"><a href="{{ route('admin.navigation.index', 'mobile') }}">手机导航</a></li>
 </ul>
 <br />
 @endsection
@@ -31,14 +31,14 @@
                 <div class="pull-right" style="width: 250px;">
                 </div>
                 <div class="tools-group">
-                    <a href="{{ route('administrator.navigation.create', [$category, 0]) }}" class="btn btn-primary"><i class="icon icon-plus-sign"></i> 添加</a>
+                    <a href="{{ route('admin.navigation.create', [$category, 0]) }}" class="btn btn-primary"><i class="icon icon-plus-sign"></i> 添加</a>
                     <button class="btn btn-danger" form="form-navigation-list"><i class="icon icon-sort-by-order-alt"></i> 排序</button>
                 </div>
             </div>
 
             @if(count($navigations))
 
-                <form name="form-article-list" id="form-navigation-list" class="layui-form layui-form-pane" method="POST" action="{{route('administrator.navigation.order', $category)}}">
+                <form name="form-article-list" id="form-navigation-list" class="layui-form layui-form-pane" method="POST" action="{{route('admin.navigation.order', $category)}}">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <table class="table table-bordered">
@@ -72,9 +72,9 @@
                                         @case(1)<span class="label label-badge label-success">正常</span>@break
                                     @endswitch</td>
                                 <td class="text-center">
-                                    <a href="{{ route('administrator.navigation.create', [$category, $navigation->id]) }}" class="btn btn-xs btn-info">添加</a>
-                                    <a href="{{ route('administrator.navigation.edit', [$navigation->id, $category]) }}" class="btn btn-xs btn-primary">编辑</a>
-                                    <a href="javascript:;" data-url="{{ route('administrator.navigation.destroy', [$navigation->id,$category]) }}" class="btn btn-xs btn-danger form-delete">删除</a>
+                                    <a href="{{ route('admin.navigation.create', [$category, $navigation->id]) }}" class="btn btn-xs btn-info">添加</a>
+                                    <a href="{{ route('admin.navigation.edit', [$navigation->id, $category]) }}" class="btn btn-xs btn-primary">编辑</a>
+                                    <a href="javascript:;" data-url="{{ route('admin.navigation.destroy', [$navigation->id,$category]) }}" class="btn btn-xs btn-danger form-delete">删除</a>
                                 </td>
                             </tr>
                         @endforeach

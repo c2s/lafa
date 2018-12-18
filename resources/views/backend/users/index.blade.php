@@ -66,7 +66,7 @@
                                     @case(2)<span class="label label-badge label-danger">停用</span>@break
                                 @endswitch</td>
                             <td class="text-center">
-                                <a href="{{ route('administrator.users.password.edit', $user->id) }}" class="btn btn-xs btn-warning">重置密码</a>
+                                <a href="{{ route('admin.users.password.edit', $user->id) }}" class="btn btn-xs btn-warning">重置密码</a>
                                 <a href="{{ route('users.edit', $user->id) }}" class="btn btn-xs btn-primary">编辑</a>
                                 <a href="javascript:;" data-url="{{ route('users.destroy', $user->id) }}" class="btn btn-xs btn-danger form-delete">删除</a>
                             </td>

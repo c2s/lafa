@@ -110,10 +110,10 @@ Route::any('wechat/{safeWechat}.html', 'WeChatController@serve')->name('wechat.a
 
 /*
 |--------------------------------------------------------------------------
-| Administrator Routes
+| Backend Routes
 |--------------------------------------------------------------------------
 |
 | 载入后台相关路由
 |
 */
-require __DIR__ . '/administrator.php';
+require __DIR__ . '/backend.php';

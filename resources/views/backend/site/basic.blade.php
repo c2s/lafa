@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-body">
-                    <form id="form-validator" class="form-horizontal" method="POST" action="{{route('administrator.site.basic')}}">
+                    <form id="form-validator" class="form-horizontal" method="POST" action="{{route('admin.site.basic')}}">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" class="mini-hidden" value="POST">
 

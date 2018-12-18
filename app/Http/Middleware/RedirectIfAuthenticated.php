@@ -19,8 +19,8 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             $action = $request->route()->getAction();
-            $redirectUrl = (isset($action['domain']) && config('administrator.domain') == $action['domain']) || (  isset($action['prefix']) && '/'. config('administrator.domain') == $action['prefix']) ?
-                route('administrator.dashboard') : '/';
+            $redirectUrl = (isset($action['domain']) && config('admin.domain') == $action['domain']) || (  isset($action['prefix']) && '/'. config('admin.domain') == $action['prefix']) ?
+                route('admin.dashboard') : '/';
             return redirect($redirectUrl);
         }
 

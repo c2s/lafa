@@ -7,12 +7,12 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller as BaseController;
 
 /**
- * Administrator 基础控制器
+ * Backend 基础控制器
  *
  * Class Controller
  * @package App\Http\Controllers

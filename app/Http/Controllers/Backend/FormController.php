@@ -7,20 +7,20 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Form;
-use App\Http\Requests\Administrator\UserRequest;
+use App\Http\Requests\Backend\UserRequest;
 use App\Handlers\UploadHandler;
 
 /**
  * 用户操作控制器
  *
  * Class UserController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class FormController extends Controller
 {
@@ -37,7 +37,7 @@ class FormController extends Controller
     {
 //        $this->authorize('index', $form);
 
-        $forms = $form->where('form', strtolower($type))->with(['user'])->recent()->paginate(config('administrator.paginate.limit'));
+        $forms = $form->where('form', strtolower($type))->with(['user'])->recent()->paginate(config('admin.paginate.limit'));
 
         if( $forms->count() < 1 && $forms->lastPage() > 1 ){
             return redirect($forms->url($forms->lastPage()));

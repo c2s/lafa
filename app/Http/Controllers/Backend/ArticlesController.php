@@ -7,12 +7,12 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use DB;
 use App\Models\Article;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\ArticleRequest;
+use App\Http\Requests\Backend\ArticleRequest;
 use App\Handlers\CategoryHandler;
 use App\Models\Category;
 use App\Models\MultipleFile;
@@ -21,7 +21,7 @@ use App\Models\MultipleFile;
  * 后台文章管理控制器
  *
  * Class ArticlesController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class ArticlesController extends Controller
 {
@@ -67,7 +67,7 @@ class ArticlesController extends Controller
             $article = $article->where('created_at','<',$end_time);
         }
 
-        $articles = $article->ordered()->recent()->paginate(config('administrator.paginate.limit'));
+        $articles = $article->ordered()->recent()->paginate(config('admin.paginate.limit'));
 
         // 修正页码
         if( $articles->count() < 1 && $articles->lastPage() > 1 ){

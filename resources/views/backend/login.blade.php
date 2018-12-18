@@ -55,7 +55,7 @@
 
                 {{--@include('backend::layouts._message')--}}
                 {{--@include('backend::layouts._error')--}}
-                 <form class="form-horizontal"  method="POST" action="{{ route('administrator.login') }}">
+                 <form class="form-horizontal"  method="POST" action="{{ route('admin.login') }}">
                         {{ csrf_field() }}
                     <div class="form-group">
                         <label for="email" class="col-sm-3 required">邮箱</label>

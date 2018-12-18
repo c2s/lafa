@@ -188,7 +188,7 @@ if( !function_exists("backend_url") ){
     function backend_url($uri)
     {
         $args = func_get_args();
-        $args[0] = config('administrator.uri').'/'.$uri;
+        $args[0] = config('admin.uri').'/'.$uri;
 
         return url(...$args);
     }
@@ -205,7 +205,7 @@ if( !function_exists("backend_route") ){
     function backend_route($uri)
     {
         $args = func_get_args();
-        $args[0] = config('administrator.uri').'.'.$uri;
+        $args[0] = config('admin.uri').'.'.$uri;
 
         return route(...$args);
     }
@@ -272,7 +272,7 @@ if( !function_exists("backend_redirect") ){
         if(empty($args)){
             return redirect();
         }else if(isset($args[0]) && is_string($args[0])) {
-            $args[0] = config('administrator.uri').'/'. $args[0];
+            $args[0] = config('admin.uri').'/'. $args[0];
         }
 
         return redirect(...$args);

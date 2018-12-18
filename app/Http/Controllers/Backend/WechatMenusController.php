@@ -7,12 +7,12 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Wechat;
 use App\Models\WechatMenu;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\WechatMenuRequest;
+use App\Http\Requests\Backend\WechatMenuRequest;
 use App\Handlers\WechatMenuHandler;
 use EasyWeChat\Factory;
 use EasyWeChat\Kernel\Exceptions\HttpException;
@@ -21,7 +21,7 @@ use EasyWeChat\Kernel\Exceptions\HttpException;
  * 微信菜单控制器
  *
  * Class WechatMenusController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class WechatMenusController extends Controller
 {

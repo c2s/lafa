@@ -54,31 +54,31 @@ class SeedRolesAndPermissionsData extends Migration
         Permission::create(['name' => 'manage_form', 'remarks'=> '表单管理']);
 
         // 创建超级管理角色，并赋予权限
-        $administrator = Role::create(['name' => 'Administrator', 'remarks'=> '超级管理员']);
-        $administrator->givePermissionTo('manage_develop');
-        $administrator->givePermissionTo('manage_log');
-        $administrator->givePermissionTo('manage_system');
-        $administrator->givePermissionTo('manage_users');
-        $administrator->givePermissionTo('manage_permissions');
-        $administrator->givePermissionTo('manage_roles');
-        $administrator->givePermissionTo('manage_setting');
-        $administrator->givePermissionTo('manage_site_basic');
-        $administrator->givePermissionTo('manage_site_company');
-        $administrator->givePermissionTo('manage_site_contact');
-        $administrator->givePermissionTo('manage_links');
-        $administrator->givePermissionTo('manage_navigation');
-        $administrator->givePermissionTo('manage_wechat');
-        $administrator->givePermissionTo('manage_content');
-        $administrator->givePermissionTo('manage_category');
-        $administrator->givePermissionTo('manage_article');
-        $administrator->givePermissionTo('manage_page');
-        $administrator->givePermissionTo('manage_images');
-        $administrator->givePermissionTo('manage_slide');
-        $administrator->givePermissionTo('manage_block');
-        $administrator->givePermissionTo('manage_annex');
-        $administrator->givePermissionTo('manage_xcx');
-        $administrator->givePermissionTo('manage_media');
-        $administrator->givePermissionTo('manage_form');
+        $admin = Role::create(['name' => 'Administrator', 'remarks'=> '超级管理员']);
+        $admin->givePermissionTo('manage_develop');
+        $admin->givePermissionTo('manage_log');
+        $admin->givePermissionTo('manage_system');
+        $admin->givePermissionTo('manage_users');
+        $admin->givePermissionTo('manage_permissions');
+        $admin->givePermissionTo('manage_roles');
+        $admin->givePermissionTo('manage_setting');
+        $admin->givePermissionTo('manage_site_basic');
+        $admin->givePermissionTo('manage_site_company');
+        $admin->givePermissionTo('manage_site_contact');
+        $admin->givePermissionTo('manage_links');
+        $admin->givePermissionTo('manage_navigation');
+        $admin->givePermissionTo('manage_wechat');
+        $admin->givePermissionTo('manage_content');
+        $admin->givePermissionTo('manage_category');
+        $admin->givePermissionTo('manage_article');
+        $admin->givePermissionTo('manage_page');
+        $admin->givePermissionTo('manage_images');
+        $admin->givePermissionTo('manage_slide');
+        $admin->givePermissionTo('manage_block');
+        $admin->givePermissionTo('manage_annex');
+        $admin->givePermissionTo('manage_xcx');
+        $admin->givePermissionTo('manage_media');
+        $admin->givePermissionTo('manage_form');
 
         // 创建站长角色，并赋予权限
         $founder = Role::create(['name' => 'Founder', 'remarks'=> '创始人']);

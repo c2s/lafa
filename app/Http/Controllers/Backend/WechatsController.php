@@ -7,17 +7,17 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Wechat;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\WechatRequest;
+use App\Http\Requests\Backend\WechatRequest;
 
 /**
  * 微信公众号管理控制器
  *
  * Class WechatsController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class WechatsController extends Controller
 {
@@ -34,7 +34,7 @@ class WechatsController extends Controller
      */
 	public function index()
 	{
-		$wechats = Wechat::paginate(config('administrator.paginate.limit'));
+		$wechats = Wechat::paginate(config('admin.paginate.limit'));
 		return backend_view('wechats.index', compact('wechats'));
 	}
 

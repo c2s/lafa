@@ -9,7 +9,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Administrator Routes
+| Backend Routes
 |--------------------------------------------------------------------------
 |
 | 管理后台相关路由定义
@@ -21,17 +21,17 @@
  * 后台不需要需要认证相关路由
  * -------------------------------------------------------------------------
  */
-Route::group(['domain' => config('administrator.domain'), 'prefix' => config('administrator.uri'), 'namespace' => 'Administrator', 'middleware' => [], ], function () {
+Route::group(['domain' => config('admin.domain'), 'prefix' => config('admin.uri'), 'namespace' => 'Backend', 'middleware' => [], ], function () {
 
     # 登录
-    Route::get('login', 'LoginController@showLoginForm')->name('administrator.login');
+    Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
     Route::post('login', 'LoginController@login');
 
     # 退出
-    Route::get('logout', 'LoginController@logout')->name('administrator.logout');
+    Route::get('logout', 'LoginController@logout')->name('admin.logout');
 
     # 无权限提示
-    Route::get('permission-denied', 'WelcomeController@permissionDenied')->name('administrator.permission-denied');
+    Route::get('permission-denied', 'WelcomeController@permissionDenied')->name('admin.permission-denied');
 
 });
 
@@ -40,26 +40,26 @@ Route::group(['domain' => config('administrator.domain'), 'prefix' => config('ad
  * 后台需要认证相关路由
  * -------------------------------------------------------------------------
  */
-Route::group(['domain' => config('administrator.domain'), 'prefix' => config('administrator.uri'), 'namespace' => 'Administrator', 'middleware' => ['auth'], ], function () {
+Route::group(['domain' => config('admin.domain'), 'prefix' => config('admin.uri'), 'namespace' => 'Backend', 'middleware' => ['auth'], ], function () {
 
     # 首页
-    Route::get('/', 'WelcomeController@dashboard')->name('administrator.dashboard');
+    Route::get('/', 'WelcomeController@dashboard')->name('admin.dashboard');
 
     # 站点设置相关路由
-    Route::get('site/basic','SiteController@basic')->name('administrator.site.basic');
+    Route::get('site/basic','SiteController@basic')->name('admin.site.basic');
     Route::post('site/basic','SiteController@basicStore');
-    Route::get('site/company','SiteController@company')->name('administrator.site.company');
+    Route::get('site/company','SiteController@company')->name('admin.site.company');
     Route::post('site/company','SiteController@companyStore');
-    Route::get('site/contact','SiteController@contact')->name('administrator.site.contact');
+    Route::get('site/contact','SiteController@contact')->name('admin.site.contact');
     Route::post('site/contact','SiteController@contactStore');
 
     # 用户相关路由
     Route::resource('user', 'UserController', ['only' => ['password', 'avatar', 'update', 'edit', 'destroy']]);
-    Route::get('user/{user}/password', 'UserController@showPasswordForm')->name('administrator.password.edit');
-    Route::put('user/password/{user}', 'UserController@passwordRequestForm')->name('administrator.password.update');
+    Route::get('user/{user}/password', 'UserController@showPasswordForm')->name('admin.password.edit');
+    Route::put('user/password/{user}', 'UserController@passwordRequestForm')->name('admin.password.update');
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
-    Route::get('users/{user}/password', 'UsersController@showPasswordForm')->name('administrator.users.password.edit');
-    Route::put('users/password/{user}', 'UsersController@passwordRequestForm')->name('administrator.users.password.update');
+    Route::get('users/{user}/password', 'UsersController@showPasswordForm')->name('admin.users.password.edit');
+    Route::put('users/password/{user}', 'UsersController@passwordRequestForm')->name('admin.users.password.update');
 
     # 角色相关路由
     Route::resource('roles', 'RolesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
@@ -76,24 +76,24 @@ Route::group(['domain' => config('administrator.domain'), 'prefix' => config('ad
     Route::get('slides/{group}/create', 'SlidesController@create')->name('slides.create');
 
     # 分类相关路由
-    Route::get('categorys/{type}','CategorysController@index')->name('administrator.category.index');
-    Route::post('categorys/{type}','CategorysController@store')->name('administrator.category.store');
-    Route::get('categorys/create/{type}/{parent}','CategorysController@create')->name('administrator.category.create');
-    Route::get('categorys/{category}/{type}','CategorysController@show')->name('administrator.category.show');
-    Route::get('categorys/{category}/edit/{type}','CategorysController@edit')->name('administrator.category.edit');
-    Route::put('categorys/{type}/order','CategorysController@order')->name('administrator.category.order');
-    Route::put('categorys/{category}/{type}','CategorysController@update')->name('administrator.category.update');
-    Route::delete('categorys/{category}/{type}','CategorysController@destroy')->name('administrator.category.destroy');
+    Route::get('categorys/{type}','CategorysController@index')->name('admin.category.index');
+    Route::post('categorys/{type}','CategorysController@store')->name('admin.category.store');
+    Route::get('categorys/create/{type}/{parent}','CategorysController@create')->name('admin.category.create');
+    Route::get('categorys/{category}/{type}','CategorysController@show')->name('admin.category.show');
+    Route::get('categorys/{category}/edit/{type}','CategorysController@edit')->name('admin.category.edit');
+    Route::put('categorys/{type}/order','CategorysController@order')->name('admin.category.order');
+    Route::put('categorys/{category}/{type}','CategorysController@update')->name('admin.category.update');
+    Route::delete('categorys/{category}/{type}','CategorysController@destroy')->name('admin.category.destroy');
 
     # 导航相关路由
-    Route::get('navigations/{category}','NavigationsController@index')->name('administrator.navigation.index');
-    Route::post('navigations/{category}','NavigationsController@store')->name('administrator.navigation.store');
-    Route::get('navigations/create/{category}/{parent}','NavigationsController@create')->name('administrator.navigation.create');
-    Route::get('navigations/{navigation}/{category}','NavigationsController@show')->name('administrator.navigation.show');
-    Route::get('navigations/{navigation}/edit/{category}','NavigationsController@edit')->name('administrator.navigation.edit');
-    Route::put('navigations/{category}/order','NavigationsController@order')->name('administrator.navigation.order');
-    Route::put('navigations/{navigation}/{category}','NavigationsController@update')->name('administrator.navigation.update');
-    Route::delete('navigations/{navigation}/{category}','NavigationsController@destroy')->name('administrator.navigation.destroy');
+    Route::get('navigations/{category}','NavigationsController@index')->name('admin.navigation.index');
+    Route::post('navigations/{category}','NavigationsController@store')->name('admin.navigation.store');
+    Route::get('navigations/create/{category}/{parent}','NavigationsController@create')->name('admin.navigation.create');
+    Route::get('navigations/{navigation}/{category}','NavigationsController@show')->name('admin.navigation.show');
+    Route::get('navigations/{navigation}/edit/{category}','NavigationsController@edit')->name('admin.navigation.edit');
+    Route::put('navigations/{category}/order','NavigationsController@order')->name('admin.navigation.order');
+    Route::put('navigations/{navigation}/{category}','NavigationsController@update')->name('admin.navigation.update');
+    Route::delete('navigations/{navigation}/{category}','NavigationsController@destroy')->name('admin.navigation.destroy');
 
     # 单页面相关路由
     Route::resource('pages', 'PagesController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);

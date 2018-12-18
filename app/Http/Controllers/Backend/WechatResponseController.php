@@ -7,18 +7,18 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Wechat;
 use App\Models\WechatResponse;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\WechatResponseRequest;
+use App\Http\Requests\Backend\WechatResponseRequest;
 
 /**
  * 微信响应控制器
  *
  * Class WechatResponseController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class WechatResponseController extends Controller
 {
@@ -36,7 +36,7 @@ class WechatResponseController extends Controller
      */
 	public function index(Wechat $wechat)
 	{
-		$wechat_responses = WechatResponse::where('wechat_id',$wechat->id)->recent('asc')->paginate(config('administrator.paginate.limit'));
+		$wechat_responses = WechatResponse::where('wechat_id',$wechat->id)->recent('asc')->paginate(config('admin.paginate.limit'));
 		return backend_view('wechat.response.index', compact('wechat_responses', 'wechat'));
 	}
 

@@ -15,7 +15,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @guest
-                        <li><a href="{{ route('administrator.login') }}">登录</a></li>
+                        <li><a href="{{ route('admin.login') }}">登录</a></li>
                     @else
                     <li class="dropdown">
                         <a href="javascript:;" data-toggle="dropdown">
@@ -25,11 +25,11 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ route('user.edit', Auth::user()->id)  }}"><i class="icon icon-edit"></i> 基本资料</a></li>
-                            <li><a href="{{ route('administrator.password.edit', Auth::user()->id )  }}"><i class="icon icon-key"></i> 修改密码</a></li>
+                            <li><a href="{{ route('admin.password.edit', Auth::user()->id )  }}"><i class="icon icon-key"></i> 修改密码</a></li>
                             <li class="divider"></li>
                             <li>
-                                <a href="{{ route('administrator.logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="icon icon-signout"></i> 退出</a>
-                                <form id="logout-form" action="{{ route('administrator.logout') }}" method="GET" style="display: none;">
+                                <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="icon icon-signout"></i> 退出</a>
+                                <form id="logout-form" action="{{ route('admin.logout') }}" method="GET" style="display: none;">
                                     {{ csrf_field() }}
                                 </form>
                             </li>

@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{asset('plugins/layui/css/layui.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/administrator.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/admin.css')}}" rel="stylesheet" type="text/css">
     <link rel="apple-touch-icon" href="/favicon.png">
     @yield('styles')
 </head>
@@ -27,7 +27,7 @@
 
 <!-- Scripts -->
 <script src="{{asset('plugins/layui/layui.all.js')}}"></script>
-<script src="{{asset('js/administrator.js')}}"></script>
+<script src="{{asset('js/admin.js')}}"></script>
 
 @include('backend.layouts._message')
 

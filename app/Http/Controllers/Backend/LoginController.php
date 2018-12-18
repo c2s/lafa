@@ -7,7 +7,7 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
  * 后台登录控制器
  *
  * Class LoginController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class LoginController extends Controller
 {
@@ -49,7 +49,7 @@ class LoginController extends Controller
      * @return string
      */
     public function redirectTo(){
-        return route('administrator.dashboard');
+        return route('admin.dashboard');
     }
 
     /**
@@ -95,6 +95,6 @@ class LoginController extends Controller
 
         $request->session()->invalidate();
 
-        return redirect()->route('administrator.login');
+        return redirect()->route('admin.login');
     }
 }

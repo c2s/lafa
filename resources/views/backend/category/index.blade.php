@@ -19,13 +19,13 @@
                 <div class="pull-right" style="width: 250px;">
                 </div>
                 <div class="tools-group">
-                    <a href="{{ route('administrator.category.create', [$type, 0]) }}"  class="btn btn-primary"><i class="icon icon-plus-sign"></i> 添加</a>
+                    <a href="{{ route('admin.category.create', [$type, 0]) }}"  class="btn btn-primary"><i class="icon icon-plus-sign"></i> 添加</a>
                     <button class="btn btn-danger" form="form-category-list"><i class="icon icon-sort-by-order-alt"></i> 排序</button>
                 </div>
             </div>
 
             @if(count($categorys))
-                <form name="form-article-list" id="form-category-list" class="layui-form layui-form-pane2" method="POST" action="{{route('administrator.category.order', $type)}}">
+                <form name="form-article-list" id="form-category-list" class="layui-form layui-form-pane2" method="POST" action="{{route('admin.category.order', $type)}}">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <table class="table table-bordered">
@@ -53,9 +53,9 @@
                                 </td>
                                 <td>{{ str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$category->lavel)}}@if($category->lavel > 0)├─ @endif{{ $category->name}}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('administrator.category.create', [$type, $category->id]) }}" class="btn btn-xs btn-success">添加</a>
-                                    <a href="{{ route('administrator.category.edit', [$category->id, $type]) }}" class="btn btn-xs btn-primary">编辑</a>
-                                    <a href="javascript:;" data-url="{{ route('administrator.category.destroy', [$category->id,$type]) }}" class="btn btn-xs btn-danger form-delete">删除</a>
+                                    <a href="{{ route('admin.category.create', [$type, $category->id]) }}" class="btn btn-xs btn-success">添加</a>
+                                    <a href="{{ route('admin.category.edit', [$category->id, $type]) }}" class="btn btn-xs btn-primary">编辑</a>
+                                    <a href="javascript:;" data-url="{{ route('admin.category.destroy', [$category->id,$type]) }}" class="btn btn-xs btn-danger form-delete">删除</a>
                                 </td>
                             </tr>
                         @endforeach

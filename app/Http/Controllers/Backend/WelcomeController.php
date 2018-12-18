@@ -7,7 +7,7 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Auth;
@@ -16,7 +16,7 @@ use Auth;
  * Welcome 控制器
  *
  * Class WelcomeController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class WelcomeController extends Controller
 {
@@ -37,7 +37,7 @@ class WelcomeController extends Controller
     public function permissionDenied(){
         // 如果当前用户有权限访问后台，直接跳转访问
         if (Auth::user()->can('manage_system')) {
-            //return redirect()->route('administrator.dashboard')->status(302);
+            //return redirect()->route('admin.dashboard')->status(302);
         }
 
         // 否则使用视图

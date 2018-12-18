@@ -7,17 +7,17 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Link;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\LinkRequest;
+use App\Http\Requests\Backend\LinkRequest;
 
 /**
  * 友情链接
  *
  * Class LinksController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class LinksController extends Controller
 {
@@ -40,7 +40,7 @@ class LinksController extends Controller
 	{
 	    $this->authorize('index',$link);
 
-	    $links = $link->ordered()->recent()->paginate((config('administrator.paginate.limit')));
+	    $links = $link->ordered()->recent()->paginate((config('admin.paginate.limit')));
 
 		return backend_view('links.index', compact('links'));
 	}

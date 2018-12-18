@@ -7,17 +7,17 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Block;
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\BlockRequest;
+use App\Http\Requests\Backend\BlockRequest;
 
 /**
  * 后台区块管理控制器
  *
  * Class BlocksController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class BlocksController extends Controller
 {
@@ -37,7 +37,7 @@ class BlocksController extends Controller
 	public function index(Block $block)
 	{
         $this->authorize('index', $block);
-        $blocks = $block->recent()->paginate(config('administrator.paginate.limit'));
+        $blocks = $block->recent()->paginate(config('admin.paginate.limit'));
 
 		return backend_view('blocks.index', compact('blocks'));
 	}

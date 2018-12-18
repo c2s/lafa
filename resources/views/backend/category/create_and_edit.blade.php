@@ -23,7 +23,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-body">
-                    <form id="form-validator" class="form-horizontal" method="POST" action="{{ $category->id ? route('administrator.category.update', [$category->id, $type]) : route('administrator.category.store', $type) }}?redirect={{ previous_url() }}">
+                    <form id="form-validator" class="form-horizontal" method="POST" action="{{ $category->id ? route('admin.category.update', [$category->id, $type]) : route('admin.category.store', $type) }}?redirect={{ previous_url() }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" class="mini-hidden" value="{{ $category->id ? 'PUT' : 'POST' }}">
 

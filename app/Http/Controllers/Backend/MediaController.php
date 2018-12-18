@@ -7,7 +7,7 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\File;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
  * 媒体控制器
  *
  * Class MediaController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class MediaController extends Controller
 {
@@ -45,7 +45,7 @@ class MediaController extends Controller
             $file = $file->where('folder', $folder);
         }
 
-	    $paginateLimit = config('administrator.paginate.limit');
+	    $paginateLimit = config('admin.paginate.limit');
 		$images = $file->where('type','image')->recent()->paginate(24);
 
 		return backend_view('media.image', compact('images', 'folder'));

@@ -7,7 +7,7 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +18,7 @@ use Spatie\Permission\Models\Role;
  * 权限控制器
  *
  * Class PermissionsController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class PermissionsController extends Controller
 {
@@ -38,7 +38,7 @@ class PermissionsController extends Controller
     public function index(Request $request, Permission $permission)
     {
         $this->authorize('index', $permission);
-        $permissions = $permission->paginate(config('administrator.paginate.limit'));
+        $permissions = $permission->paginate(config('admin.paginate.limit'));
         return backend_view('permissions.index', compact('permissions'));
     }
 

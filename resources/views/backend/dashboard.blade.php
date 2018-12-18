@@ -81,7 +81,7 @@
                         </tr>
                         <tr>
                             <td>开发作者</td>
-                            <td><a target="_blank" href="https://github.com/wanglelecc">Wanglelecc（稀饭不加糖）</a></td>
+                            <td><a target="_blank" href="https://github.com/imofei">莫非</a></td>
                         </tr>
 
                         <tr>

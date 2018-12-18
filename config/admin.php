@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 return [
 
     // 后台的 URI
-    'uri' => 'administrator',
+    'uri' => 'admin',
 
     // 后台专属域名，没有的话可以留空
     'domain' => '',
@@ -82,7 +82,7 @@ return [
                     "permission" => function(){ return Auth::user()->can('manage_site_basic'); },
                     "icon" => "icon-ie",
                     "link" => "",
-                    "route" => "administrator.site.basic",
+                    "route" => "admin.site.basic",
                     "params" => [],
                     "query" => [],
                 ],
@@ -92,7 +92,7 @@ return [
                     "permission" => function(){ return Auth::user()->can('manage_site_company'); },
                     "icon" => "icon-home",
                     "link" => "",
-                    "route" => "administrator.site.company",
+                    "route" => "admin.site.company",
                     "params" => [],
                     "query" => [],
                 ],
@@ -102,7 +102,7 @@ return [
                     "permission" => function(){ return Auth::user()->can('manage_site_contact'); },
                     "icon" => "icon-phone",
                     "link" => "",
-                    "route" => "administrator.site.contact",
+                    "route" => "admin.site.contact",
                     "params" => [],
                     "query" => [],
                 ],
@@ -122,7 +122,7 @@ return [
                     "permission" => function(){ return Auth::user()->can('manage_navigation'); },
                     "icon" => "icon-th-large",
                     "link" => "",
-                    "route" => "administrator.navigation.index",
+                    "route" => "admin.navigation.index",
                     "params" => ['desktop'],
                     "query" => [],
                 ],
@@ -154,7 +154,7 @@ return [
                     "permission" => function(){ return Auth::user()->can('manage_category'); },
                     "icon" => "icon-list-ul",
                     "link" => "",
-                    "route" => "administrator.category.index",
+                    "route" => "admin.category.index",
                     "params" => ['article'],
                     "query" => [],
                 ],
@@ -256,7 +256,7 @@ return [
             "text" => "控制台",
             "permission" => function(){ return true; },
             "icon" => "",
-            "route" => "administrator.dashboard",
+            "route" => "admin.dashboard",
             "params" => [],
             "query" => [],
             "link" => "",

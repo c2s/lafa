@@ -15,7 +15,7 @@
 
     <!-- Styles -->
     <link href="{{asset('plugins/layui/css/layui.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('css/administrator.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/admin.css')}}" rel="stylesheet" type="text/css">
     <link rel="apple-touch-icon" href="/favicon.png">
     @yield('styles')
 </head>
@@ -50,9 +50,9 @@
     <div class="alone-preview">
         <p class="alone-download-btn">
             @if (Auth::check())
-                <a href="{{ route('administrator.dashboard')  }}" class="layui-btn">控制台</a>
+                <a href="{{ route('admin.dashboard')  }}" class="layui-btn">控制台</a>
             @else
-                <a href="{{ route('administrator.login')  }}" class="layui-btn">登录</a>
+                <a href="{{ route('admin.login')  }}" class="layui-btn">登录</a>
             @endif
             <a href="{{ url()->previous() }}" class="layui-btn layui-btn-primary alone-download-right">返回</a>
         </p>
@@ -62,7 +62,7 @@
 
 <!-- Scripts -->
 <script src="{{asset('plugins/layui/layui.all.js')}}"></script>
-<script src="{{asset('js/administrator.js')}}"></script>
+<script src="{{asset('js/admin.js')}}"></script>
 
 @include('backend::layouts._message')
 

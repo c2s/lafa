@@ -7,10 +7,10 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\Administrator\NavigationRequest;
+use App\Http\Requests\Backend\NavigationRequest;
 use Illuminate\Support\Facades\View;
 use App\Models\Navigation;
 use App\Handlers\NavigationHandler;
@@ -19,7 +19,7 @@ use App\Handlers\NavigationHandler;
  * 导航控制器
  *
  * Class NavigationsController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class NavigationsController extends Controller
 {
@@ -81,7 +81,7 @@ class NavigationsController extends Controller
 
         $navigation = Navigation::create($request->all());
 
-        return $this->redirect('administrator.navigation.index',$category)->with('success', '添加成功.');
+        return $this->redirect('admin.navigation.index',$category)->with('success', '添加成功.');
     }
 
     /**
@@ -116,7 +116,7 @@ class NavigationsController extends Controller
 
         $navigation->update($request->all());
 
-        return $this->redirect('administrator.navigation.index',$category)->with('success', '更新成功.');
+        return $this->redirect('admin.navigation.index',$category)->with('success', '更新成功.');
     }
 
     /**
@@ -154,6 +154,6 @@ class NavigationsController extends Controller
             $navigation->where('id',$id)->update(['order' => $order[$k] ?? 999 ]);
         }
 
-        return redirect()->route('administrator.navigation.index', $category)->with('success', '操作成功.');
+        return redirect()->route('admin.navigation.index', $category)->with('success', '操作成功.');
     }
 }

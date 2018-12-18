@@ -7,13 +7,13 @@
  * @date     2018-05-02 18:08
  */
 
-namespace App\Http\Controllers\Administrator;
+namespace App\Http\Controllers\Backend;
 
 use Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\Administrator\UserRequest;
+use App\Http\Requests\Backend\UserRequest;
 use App\Handlers\UploadHandler;
 use Spatie\Permission\Models\Role;
 
@@ -21,7 +21,7 @@ use Spatie\Permission\Models\Role;
  * 用户控制器
  *
  * Class UsersController
- * @package App\Http\Controllers\Administrator
+ * @package App\Http\Controllers\Backend
  */
 class UsersController extends Controller
 {
@@ -42,7 +42,7 @@ class UsersController extends Controller
     {
         $this->authorize('manage', $user);
 
-        $users = $user->withOrder($request->sortField, $request->sortOrder)->paginate(config('administrator.paginate.limit'));
+        $users = $user->withOrder($request->sortField, $request->sortOrder)->paginate(config('admin.paginate.limit'));
 
         return backend_view('users.index', compact('users'));
     }

@@ -12,23 +12,23 @@ namespace App\Handlers;
 /**
  * 后台菜单工具类
  *
- * Class AdministratorMenuHandler
+ * Class BackendMenuHandler
  * @package App\Handlers
  */
-class AdministratorMenuHandler
+class BackendMenuHandler
 {
-    static $administratorMenu = [];
+    static $adminMenu = [];
 
     /**
      * 获取后台菜单
      * @return array
      */
-    public function getAdministratorMenu(){
-        if(empty(static::$administratorMenu)){
-            static::$administratorMenu = $this->filterPermissionWith(config('administrator.menu'));
+    public function getBackendMenu(){
+        if(empty(static::$adminMenu)){
+            static::$adminMenu = $this->filterPermissionWith(config('admin.menu'));
         }
 
-        return static::$administratorMenu;
+        return static::$adminMenu;
     }
 
     /**
@@ -36,8 +36,8 @@ class AdministratorMenuHandler
      *
      * @return array
      */
-    public function getChildrenAdministratorMenu($menuId){
-        return $this->filterChildrenAdministratorMenuWith($this->getAdministratorMenu(), $menuId);
+    public function getChildrenBackendMenu($menuId){
+        return $this->filterChildrenBackendMenuWith($this->getBackendMenu(), $menuId);
     }
 
     /**
@@ -47,7 +47,7 @@ class AdministratorMenuHandler
      * @param $menuId
      * @return array|mixed
      */
-    protected function filterChildrenAdministratorMenuWith($menus,$menuId)
+    protected function filterChildrenBackendMenuWith($menus,$menuId)
     {
         foreach($menus as $menu){
             if($menu['id'] == $menuId){

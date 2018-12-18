@@ -13,7 +13,7 @@
  *
  */
 
-namespace App\Http\Requests\Administrator;
+namespace App\Http\Requests\Backend;
 
 class CategoryRequest extends Request
 {

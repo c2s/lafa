@@ -6,14 +6,14 @@
     <section class="sidebar">
         <ul class="sidebar-menu" data-widget="tree">
             <li class="@if($activeNavId == 'dashboard') active @endif">
-                <a href="{{route('administrator.dashboard')}}">
+                <a href="{{route('admin.dashboard')}}">
                     <i class="icon icon-dashboard"></i>
                     <span>仪表盘</span>
                     <span class="pull-right-container"></span>
                 </a>
             </li>
 
-            @foreach(config('administrator.menu') as $key1 => $menu)
+            @foreach(config('admin.menu') as $key1 => $menu)
                 @if(call_user_func($menu['permission']))
                 <li class="treeview @if($activeNavId == $menu['id']) active @endif">
                     <a href="@if(!empty($menu['link'])) {{$menu['link']}} @elseif(!empty($menu['route'])) {{route($menu['route'], $menu['params'])}}@if(!empty($menu['query']))?{{implode('&',$menu['query'])}}@endif @else javascript:; @endif">
