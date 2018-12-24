@@ -3,7 +3,7 @@
 @section('title',$title = '控制台')
 
 @section('breadcrumb')
-    <li class="active">仪表盘</li>
+    <li class="active">控制台</li>
 @endsection
 
 @section('content')

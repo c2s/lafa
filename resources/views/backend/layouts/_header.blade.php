@@ -1,13 +1,15 @@
 <header class="main-header">
+    <div class="navbar-header navbar-fixed-top">
+        <a class="navbar-toggle" href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse"><i class="icon icon-th-large"></i></a>
+        <a class="sidebar-toggle" href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a>
+        <a class="logo" href="#">
+            <span class="logo-big">{{ config('app.name', 'Lafa')  }}</span>
+        </a>
+        <a class="logo-m" href="#">
+            <span class="logo-mini">LF</span>
+        </a>
+    </div>
     <nav class="navbar navbar-fixed-top bg-primary">
-        <div class="navbar-header">
-            <a class="navbar-toggle" href="javascript:;" data-toggle="collapse" data-target=".navbar-collapse"><i class="icon icon-th-large"></i></a>
-            <a class="sidebar-toggle" href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a>
-            <a class="navbar-brand" href="#">
-                <span class="logo">{{ config('app.name', 'Lafa')  }}</span>
-                <span class="logo-mini">LC</span>
-            </a>
-        </div>
         <div class="collapse navbar-collapse">
             <div class="container-fluid">
                 <ul class="nav navbar-nav">

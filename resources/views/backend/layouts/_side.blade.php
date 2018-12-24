@@ -8,7 +8,7 @@
             <li class="@if($activeNavId == 'dashboard') active @endif">
                 <a href="{{route('admin.dashboard')}}">
                     <i class="icon icon-dashboard"></i>
-                    <span>仪表盘</span>
+                    <span>控制台</span>
                     <span class="pull-right-container"></span>
                 </a>
             </li>

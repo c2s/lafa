@@ -21,6 +21,7 @@
         <link rel="stylesheet" href="{{asset('plugins/zui/lib/uploader/zui.uploader.min.css')}}">
         <link rel="stylesheet" href="{{asset('plugins/webuploader/webuploader.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/administrator.css')}}">
         <link rel="apple-touch-icon" href="/favicon.png">
         @yield('styles')
     </head>
