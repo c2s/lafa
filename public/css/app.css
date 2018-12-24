@@ -130,7 +130,8 @@ li, ul {
     top: 15px;
     right: 15px;
     color: #fff;
-    border: 0
+    border: 0;
+    margin-left: 230px;
 }
 
 .main-sidebar {
