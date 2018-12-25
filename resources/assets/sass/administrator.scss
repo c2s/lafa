@@ -86,7 +86,7 @@ h1,h2,h3{font-size: 14px;}
 
 /* 头部 */
 .header{height: 59px; border-bottom: 1px solid #404553;  background-color: #393D49;}
-.logo{position: absolute; left: 0; top: 16px;}
+.logo{position: absolute; left: 0;}
 .logo img{width: 82px; height: 31px;}
 
 .header .layui-nav{position: absolute; right: 0; top: 0; padding: 0; background: none;}
@@ -590,16 +590,30 @@ body .site-demo-nav .layui-nav-item{line-height: 40px}
 }
 
 .navbar {
+
 }
 
 
 .navbar-header {
-  //width: 230px;
-  //height: 50px;
+  width: 0;
+  height: 50px;
+  background-color: #18bc9c;
 }
 
 .navbar {
   margin-left: 230px;
   background-color: #18bc9c !important;
+}
+
+.container-fluid {
+  padding-left:0;
+}
+
+.content-wrapper {
+  margin-left: 235px;
+}
+
+.sidebar-collapse .content-wrapper {
+  margin-left: 55px;
 
 }

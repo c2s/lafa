@@ -121,7 +121,6 @@ h3 {
 .logo {
   position: absolute;
   left: 0;
-  top: 16px;
 }
 
 .logo img {
@@ -1997,8 +1996,26 @@ body .site-demo-nav .layui-nav-item {
   opacity: 0.9;
 }
 
+.navbar-header {
+  width: 0;
+  height: 50px;
+  background-color: #18bc9c;
+}
+
 .navbar {
   margin-left: 230px;
   background-color: #18bc9c !important;
+}
+
+.container-fluid {
+  padding-left: 0;
+}
+
+.content-wrapper {
+  margin-left: 235px;
+}
+
+.sidebar-collapse .content-wrapper {
+  margin-left: 55px;
 }
 
