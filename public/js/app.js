@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,7 +71,7 @@
 
 
 var bind = __webpack_require__(3);
-var isBuffer = __webpack_require__(17);
+var isBuffer = __webpack_require__(15);
 
 /*global toString:true*/
 
@@ -375,40 +375,13 @@ module.exports = {
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(19);
+var normalizeHeaderName = __webpack_require__(17);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -424,10 +397,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(4);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(4);
   }
   return adapter;
 }
@@ -498,7 +471,34 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
 
 /***/ }),
 /* 3 */
@@ -520,6 +520,256 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(18);
+var buildURL = __webpack_require__(20);
+var parseHeaders = __webpack_require__(21);
+var isURLSameOrigin = __webpack_require__(22);
+var createError = __webpack_require__(5);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if ("development" !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(24);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(19);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -709,307 +959,11 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(20);
-var buildURL = __webpack_require__(22);
-var parseHeaders = __webpack_require__(23);
-var isURLSameOrigin = __webpack_require__(24);
-var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(25);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if ("development" !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(26);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var enhanceError = __webpack_require__(21);
-
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(10);
-module.exports = __webpack_require__(41);
 
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(11);
-
-window.Vue = __webpack_require__(34);
-
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-Vue.component('example-component', __webpack_require__(37));
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key)))
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-var app = new Vue({
-  el: '#app'
-});
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-window._ = __webpack_require__(12);
+window._ = __webpack_require__(10);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -1018,10 +972,9 @@ window._ = __webpack_require__(12);
  */
 
 try {
-  window.Popper = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"popper.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())).default;
-  window.$ = window.jQuery = __webpack_require__(14);
+    window.$ = window.jQuery = __webpack_require__(12);
 
-  __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"bootstrap\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+    // require('bootstrap-sass');
 } catch (e) {}
 
 /**
@@ -1030,7 +983,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(15);
+window.axios = __webpack_require__(13);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -1043,10 +996,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.jQuery.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': token.content
+        }
+    });
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+window.helper = __webpack_require__(32);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -1060,13 +1020,13 @@ if (token) {
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//     key: 'your-pusher-key',
+//     cluster: 'mt1',
 //     encrypted: true
 // });
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -18176,10 +18136,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(13)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(11)(module)))
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -18207,7 +18167,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -28578,13 +28538,13 @@ return jQuery;
 
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(14);
 
 /***/ }),
-/* 16 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28592,8 +28552,8 @@ module.exports = __webpack_require__(16);
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(3);
-var Axios = __webpack_require__(18);
-var defaults = __webpack_require__(2);
+var Axios = __webpack_require__(16);
+var defaults = __webpack_require__(1);
 
 /**
  * Create an instance of Axios
@@ -28626,15 +28586,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(8);
-axios.CancelToken = __webpack_require__(32);
-axios.isCancel = __webpack_require__(7);
+axios.Cancel = __webpack_require__(7);
+axios.CancelToken = __webpack_require__(30);
+axios.isCancel = __webpack_require__(6);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(33);
+axios.spread = __webpack_require__(31);
 
 module.exports = axios;
 
@@ -28643,7 +28603,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /*!
@@ -28670,16 +28630,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(1);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(27);
-var dispatchRequest = __webpack_require__(28);
+var InterceptorManager = __webpack_require__(25);
+var dispatchRequest = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -28756,7 +28716,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 19 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28775,13 +28735,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 20 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(5);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -28808,7 +28768,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 21 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28836,7 +28796,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 22 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28911,7 +28871,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 23 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28971,7 +28931,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 24 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29046,7 +29006,7 @@ module.exports = (
 
 
 /***/ }),
-/* 25 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29089,7 +29049,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 26 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29149,7 +29109,7 @@ module.exports = (
 
 
 /***/ }),
-/* 27 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29208,18 +29168,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 28 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(29);
-var isCancel = __webpack_require__(7);
-var defaults = __webpack_require__(2);
-var isAbsoluteURL = __webpack_require__(30);
-var combineURLs = __webpack_require__(31);
+var transformData = __webpack_require__(27);
+var isCancel = __webpack_require__(6);
+var defaults = __webpack_require__(1);
+var isAbsoluteURL = __webpack_require__(28);
+var combineURLs = __webpack_require__(29);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -29301,7 +29261,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29328,7 +29288,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 30 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29349,7 +29309,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 31 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29370,13 +29330,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 32 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(8);
+var Cancel = __webpack_require__(7);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -29434,7 +29394,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 33 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -29468,7 +29428,681 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var helper = function () {
+    function helper() {
+        _classCallCheck(this, helper);
+    }
+
+    _createClass(helper, null, [{
+        key: 'test',
+        value: function test() {
+            console.log('Helper test ...');
+        }
+    }, {
+        key: 'byteToSize',
+        value: function byteToSize(bytes) {
+            var decimals = 2;
+            var size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB'];
+
+            var floor = Math.floor((bytes.toString().length - 1) / 3);
+
+            return (bytes / Math.pow(1024, floor)).toFixed(decimals) + ' ' + size[floor];
+        }
+    }, {
+        key: 'repeat',
+        value: function repeat(str, n) {
+            return new Array(n + 1).join(str);
+        }
+    }, {
+        key: 'getUrlParam',
+        value: function getUrlParam(url, ref) {
+            var str = "";
+
+            // 如果不包括此参数
+            if (url.indexOf(ref) == -1) return "";
+
+            str = url.substr(url.indexOf('?') + 1);
+
+            var arr = str.split('&');
+            for (i in arr) {
+                var paired = arr[i].split('=');
+
+                if (paired[0] == ref) {
+                    return paired[1];
+                }
+            }
+
+            return "";
+        }
+    }, {
+        key: 'putUrlParam',
+        value: function putUrlParam(url, ref, value) {
+            // 如果没有参数
+            if (url.indexOf('?') == -1) return url + "?" + ref + "=" + value;
+
+            // 如果不包括此参数
+            if (url.indexOf(ref) == -1) return url + "&" + ref + "=" + value;
+
+            var arr_url = url.split('?');
+
+            var base = arr_url[0];
+
+            var arr_param = arr_url[1].split('&');
+
+            for (i = 0; i < arr_param.length; i++) {
+
+                var paired = arr_param[i].split('=');
+
+                if (paired[0] == ref) {
+                    paired[1] = value;
+                    arr_param[i] = paired.join('=');
+                    break;
+                }
+            }
+
+            return base + "?" + arr_param.join('&');
+        }
+    }, {
+        key: 'delUrlParam',
+        value: function delUrlParam(url, ref) {
+
+            // 如果不包括此参数
+            if (url.indexOf(ref) == -1) return url;
+
+            var arr_url = url.split('?');
+
+            var base = arr_url[0];
+
+            var arr_param = arr_url[1].split('&');
+
+            var index = -1;
+
+            for (i = 0; i < arr_param.length; i++) {
+
+                var paired = arr_param[i].split('=');
+
+                if (paired[0] == ref) {
+
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index == -1) {
+                return url;
+            } else {
+                arr_param.splice(index, 1);
+                return base + "?" + arr_param.join('&');
+            }
+        }
+    }]);
+
+    return helper;
+}();
+
+module.exports = helper;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(34);
+__webpack_require__(38);
+__webpack_require__(39);
+module.exports = __webpack_require__(40);
+
+
+/***/ }),
 /* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(9);
+
+//require('zui/dist/js/zui');
+//require('zui/assets/plupload/plupload.full.min');
+//require('zui/dist/lib/uploader/zui.uploader.min');
+
+
+window.Vue = __webpack_require__(35);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+/* 
+Vue.component('example-component', require('./components/ExampleComponent.vue'));
+
+const app = new Vue({
+    el: '#app'
+});
+*/
+
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
+//import App from './App.vue';
+
+// Vue.use(ElementUI);
+/*
+const app = new Vue({
+  el: '#app',
+  render: h => h(App)
+});
+*/
+// const app = new Vue({
+//     el: '#app'
+//   });
+
+
+/* Layout()
+ * ========
+ * Implements AdminLTE layout.
+ * Fixes the layout height in case min-height fails.
+ *
+ * @usage activated automatically upon window load.
+ *        Configure any options by passing data-option="value"
+ *        to the body tag.
+ */
++function ($) {
+    'use strict';
+
+    var DataKey = 'lte.layout';
+
+    var Default = {
+        slimscroll: true,
+        resetHeight: true
+    };
+
+    var Selector = {
+        wrapper: '.wrapper',
+        contentWrapper: '.content-wrapper',
+        layoutBoxed: '.layout-boxed',
+        mainFooter: '.main-footer',
+        mainHeader: '.main-header',
+        sidebar: '.sidebar',
+        controlSidebar: '.control-sidebar',
+        fixed: '.fixed',
+        sidebarMenu: '.sidebar-menu',
+        logo: '.main-header .logo'
+    };
+
+    var ClassName = {
+        fixed: 'fixed',
+        holdTransition: 'hold-transition'
+    };
+
+    var Layout = function Layout(options) {
+        this.options = options;
+        this.bindedResize = false;
+        this.activate();
+    };
+
+    Layout.prototype.activate = function () {
+        this.fix();
+        this.fixSidebar();
+
+        $('body').removeClass(ClassName.holdTransition);
+
+        if (this.options.resetHeight) {
+            $('body, html, ' + Selector.wrapper).css({
+                'height': 'auto',
+                'min-height': '100%'
+            });
+        }
+
+        if (!this.bindedResize) {
+            $(window).resize(function () {
+                this.fix();
+                this.fixSidebar();
+
+                $(Selector.logo + ', ' + Selector.sidebar).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+                    this.fix();
+                    this.fixSidebar();
+                }.bind(this));
+            }.bind(this));
+
+            this.bindedResize = true;
+        }
+
+        $(Selector.sidebarMenu).on('expanded.tree', function () {
+            this.fix();
+            this.fixSidebar();
+        }.bind(this));
+
+        $(Selector.sidebarMenu).on('collapsed.tree', function () {
+            this.fix();
+            this.fixSidebar();
+        }.bind(this));
+    };
+
+    Layout.prototype.fix = function () {
+        // Remove overflow from .wrapper if layout-boxed exists
+        $(Selector.layoutBoxed + ' > ' + Selector.wrapper).css('overflow', 'hidden');
+
+        // Get window height and the wrapper height
+        var footerHeight = $(Selector.mainFooter).outerHeight() || 0;
+        var neg = $(Selector.mainHeader).outerHeight() + footerHeight;
+        var windowHeight = $(window).height();
+        var sidebarHeight = $(Selector.sidebar).height() || 0;
+
+        // Set the min-height of the content and sidebar based on
+        // the height of the document.
+        if ($('body').hasClass(ClassName.fixed)) {
+            $(Selector.contentWrapper).css('min-height', windowHeight - footerHeight);
+        } else {
+            var postSetHeight;
+
+            if (windowHeight >= sidebarHeight) {
+                $(Selector.contentWrapper).css('min-height', windowHeight - neg);
+                postSetHeight = windowHeight - neg;
+            } else {
+                $(Selector.contentWrapper).css('min-height', sidebarHeight);
+                postSetHeight = sidebarHeight;
+            }
+
+            // Fix for the control sidebar height
+            var $controlSidebar = $(Selector.controlSidebar);
+            if (typeof $controlSidebar !== 'undefined') {
+                if ($controlSidebar.height() > postSetHeight) $(Selector.contentWrapper).css('min-height', $controlSidebar.height());
+            }
+        }
+    };
+
+    Layout.prototype.fixSidebar = function () {
+        // Make sure the body tag has the .fixed class
+        if (!$('body').hasClass(ClassName.fixed)) {
+            if (typeof $.fn.slimScroll !== 'undefined') {
+                $(Selector.sidebar).slimScroll({ destroy: true }).height('auto');
+            }
+            return;
+        }
+
+        // Enable slimscroll for fixed layout
+        if (this.options.slimscroll) {
+            if (typeof $.fn.slimScroll !== 'undefined') {
+                // Destroy if it exists
+                // $(Selector.sidebar).slimScroll({ destroy: true }).height('auto')
+
+                // Add slimscroll
+                $(Selector.sidebar).slimScroll({
+                    height: $(window).height() - $(Selector.mainHeader).height() + 'px'
+                });
+            }
+        }
+    };
+
+    // Plugin Definition
+    // =================
+    function Plugin(option) {
+        return this.each(function () {
+            var $this = $(this);
+            var data = $this.data(DataKey);
+
+            if (!data) {
+                var options = $.extend({}, Default, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) === 'object' && option);
+                $this.data(DataKey, data = new Layout(options));
+            }
+
+            if (typeof option === 'string') {
+                if (typeof data[option] === 'undefined') {
+                    throw new Error('No method named ' + option);
+                }
+                data[option]();
+            }
+        });
+    }
+
+    var old = $.fn.layout;
+
+    $.fn.layout = Plugin;
+    $.fn.layout.Constuctor = Layout;
+
+    // No conflict mode
+    // ================
+    $.fn.layout.noConflict = function () {
+        $.fn.layout = old;
+        return this;
+    };
+
+    // Layout DATA-API
+    // ===============
+    $(window).on('load', function () {
+        Plugin.call($('body'));
+    });
+}(jQuery);
+
+/* PushMenu()
+ * ==========
+ * Adds the push menu functionality to the sidebar.
+ *
+ * @usage: $('.btn').pushMenu(options)
+ *          or add [data-toggle="push-menu"] to any button
+ *          Pass any option as data-option="value"
+ */
++function ($) {
+    'use strict';
+
+    var DataKey = 'lte.pushmenu';
+
+    var Default = {
+        collapseScreenSize: 767,
+        expandOnHover: false,
+        expandTransitionDelay: 200
+    };
+
+    var Selector = {
+        collapsed: '.sidebar-collapse',
+        open: '.sidebar-open',
+        mainSidebar: '.main-sidebar',
+        contentWrapper: '.content-wrapper',
+        searchInput: '.sidebar-form .form-control',
+        button: '[data-toggle="push-menu"]',
+        mini: '.sidebar-mini',
+        expanded: '.sidebar-expanded-on-hover',
+        layoutFixed: '.fixed'
+    };
+
+    var ClassName = {
+        collapsed: 'sidebar-collapse',
+        open: 'sidebar-open',
+        mini: 'sidebar-mini',
+        expanded: 'sidebar-expanded-on-hover',
+        expandFeature: 'sidebar-mini-expand-feature',
+        layoutFixed: 'fixed'
+    };
+
+    var Event = {
+        expanded: 'expanded.pushMenu',
+        collapsed: 'collapsed.pushMenu'
+    };
+
+    // PushMenu Class Definition
+    // =========================
+    var PushMenu = function PushMenu(options) {
+        this.options = options;
+        this.init();
+    };
+
+    PushMenu.prototype.init = function () {
+        if (this.options.expandOnHover || $('body').is(Selector.mini + Selector.layoutFixed)) {
+            this.expandOnHover();
+            $('body').addClass(ClassName.expandFeature);
+        }
+
+        $(Selector.contentWrapper).click(function () {
+            // Enable hide menu when clicking on the content-wrapper on small screens
+            if ($(window).width() <= this.options.collapseScreenSize && $('body').hasClass(ClassName.open)) {
+                this.close();
+            }
+        }.bind(this));
+
+        // __Fix for android devices
+        $(Selector.searchInput).click(function (e) {
+            e.stopPropagation();
+        });
+    };
+
+    PushMenu.prototype.toggle = function () {
+        var windowWidth = $(window).width();
+        var isOpen = !$('body').hasClass(ClassName.collapsed);
+
+        if (windowWidth <= this.options.collapseScreenSize) {
+            isOpen = $('body').hasClass(ClassName.open);
+        }
+
+        if (!isOpen) {
+            this.open();
+        } else {
+            this.close();
+        }
+    };
+
+    PushMenu.prototype.open = function () {
+        var windowWidth = $(window).width();
+
+        if (windowWidth > this.options.collapseScreenSize) {
+            $('body').removeClass(ClassName.collapsed).trigger($.Event(Event.expanded));
+        } else {
+            $('body').addClass(ClassName.open).trigger($.Event(Event.expanded));
+        }
+    };
+
+    PushMenu.prototype.close = function () {
+        var windowWidth = $(window).width();
+        if (windowWidth > this.options.collapseScreenSize) {
+            $('body').addClass(ClassName.collapsed).trigger($.Event(Event.collapsed));
+        } else {
+            $('body').removeClass(ClassName.open + ' ' + ClassName.collapsed).trigger($.Event(Event.collapsed));
+        }
+    };
+
+    PushMenu.prototype.expandOnHover = function () {
+        $(Selector.mainSidebar).hover(function () {
+            if ($('body').is(Selector.mini + Selector.collapsed) && $(window).width() > this.options.collapseScreenSize) {
+                this.expand();
+            }
+        }.bind(this), function () {
+            if ($('body').is(Selector.expanded)) {
+                this.collapse();
+            }
+        }.bind(this));
+    };
+
+    PushMenu.prototype.expand = function () {
+        setTimeout(function () {
+            $('body').removeClass(ClassName.collapsed).addClass(ClassName.expanded);
+        }, this.options.expandTransitionDelay);
+    };
+
+    PushMenu.prototype.collapse = function () {
+        setTimeout(function () {
+            $('body').removeClass(ClassName.expanded).addClass(ClassName.collapsed);
+        }, this.options.expandTransitionDelay);
+    };
+
+    // PushMenu Plugin Definition
+    // ==========================
+    function Plugin(option) {
+        return this.each(function () {
+            var $this = $(this);
+            var data = $this.data(DataKey);
+
+            if (!data) {
+                var options = $.extend({}, Default, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
+                $this.data(DataKey, data = new PushMenu(options));
+            }
+
+            if (option === 'toggle') data.toggle();
+        });
+    }
+
+    var old = $.fn.pushMenu;
+
+    $.fn.pushMenu = Plugin;
+    $.fn.pushMenu.Constructor = PushMenu;
+
+    // No Conflict Mode
+    // ================
+    $.fn.pushMenu.noConflict = function () {
+        $.fn.pushMenu = old;
+        return this;
+    };
+
+    // Data API
+    // ========
+    $(document).on('click', Selector.button, function (e) {
+        e.preventDefault();
+        Plugin.call($(this), 'toggle');
+    });
+    $(window).on('load', function () {
+        Plugin.call($(Selector.button));
+    });
+}(jQuery);
+
+/* Tree()
+ * ======
+ * Converts a nested list into a multilevel
+ * tree view menu.
+ *
+ * @Usage: $('.my-menu').tree(options)
+ *         or add [data-widget="tree"] to the ul element
+ *         Pass any option as data-option="value"
+ */
++function ($) {
+    'use strict';
+
+    var DataKey = 'lte.tree';
+
+    var Default = {
+        animationSpeed: 500,
+        accordion: true,
+        followLink: false,
+        trigger: '.treeview a'
+    };
+
+    var Selector = {
+        tree: '.tree',
+        treeview: '.treeview',
+        treeviewMenu: '.treeview-menu',
+        open: '.menu-open, .active',
+        li: 'li',
+        data: '[data-widget="tree"]',
+        active: '.active'
+    };
+
+    var ClassName = {
+        open: 'menu-open',
+        tree: 'tree',
+        openActive: 'menu-open active'
+    };
+
+    var Event = {
+        collapsed: 'collapsed.tree',
+        expanded: 'expanded.tree'
+    };
+
+    // Tree Class Definition
+    // =====================
+    var Tree = function Tree(element, options) {
+        this.element = element;
+        this.options = options;
+
+        //$(this.element).addClass(ClassName.tree);
+
+        $(Selector.treeview + Selector.active, this.element).addClass(ClassName.open);
+        $(Selector.treeviewMenu + ' ' + Selector.active).parents(Selector.treeview).addClass(ClassName.openActive);
+        this._setUpListeners();
+    };
+
+    Tree.prototype.toggle = function (link, event) {
+        var treeviewMenu = link.next(Selector.treeviewMenu);
+        var parentLi = link.parent();
+        var isOpen = parentLi.hasClass(ClassName.open);
+
+        if (!parentLi.is(Selector.treeview)) {
+            return;
+        }
+
+        if (!this.options.followLink || link.attr('href') === '#') {
+            event.preventDefault();
+        }
+
+        if (isOpen) {
+            this.collapse(treeviewMenu, parentLi);
+        } else {
+            this.expand(treeviewMenu, parentLi);
+        }
+    };
+
+    Tree.prototype.expand = function (tree, parent) {
+        var expandedEvent = $.Event(Event.expanded);
+
+        if (this.options.accordion) {
+            var openMenuLi = parent.siblings(Selector.open);
+            var openTree = openMenuLi.children(Selector.treeviewMenu);
+            this.collapse(openTree, openMenuLi);
+        }
+
+        parent.addClass(ClassName.open);
+        tree.slideDown(this.options.animationSpeed, function () {
+            $(this.element).trigger(expandedEvent);
+        }.bind(this));
+    };
+
+    Tree.prototype.collapse = function (tree, parentLi) {
+        var collapsedEvent = $.Event(Event.collapsed);
+
+        tree.find(Selector.open).removeClass(ClassName.open);
+        parentLi.removeClass(ClassName.open);
+        tree.slideUp(this.options.animationSpeed, function () {
+            tree.find(Selector.open + ' > ' + Selector.treeview).slideUp();
+            $(this.element).trigger(collapsedEvent);
+        }.bind(this));
+    };
+
+    // Private
+
+    Tree.prototype._setUpListeners = function () {
+        var that = this;
+
+        $(this.element).on('click', this.options.trigger, function (event) {
+            that.toggle($(this), event);
+        });
+    };
+
+    // Plugin Definition
+    // =================
+    function Plugin(option) {
+        return this.each(function () {
+            var $this = $(this);
+            var data = $this.data(DataKey);
+
+            if (!data) {
+                var options = $.extend({}, Default, $this.data(), (typeof option === 'undefined' ? 'undefined' : _typeof(option)) == 'object' && option);
+                $this.data(DataKey, new Tree($this, options));
+            }
+        });
+    }
+
+    var old = $.fn.tree;
+
+    $.fn.tree = Plugin;
+    $.fn.tree.Constructor = Tree;
+
+    // No Conflict Mode
+    // ================
+    $.fn.tree.noConflict = function () {
+        $.fn.tree = old;
+        return this;
+    };
+
+    // Tree Data API
+    // =============
+    $(window).on('load', function () {
+        $(Selector.data).each(function () {
+            Plugin.call($(this));
+        });
+    });
+}(jQuery);
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40431,10 +41065,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(35).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(36).setImmediate))
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -40490,7 +41124,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(36);
+__webpack_require__(37);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -40501,10 +41135,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -40694,241 +41328,25 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(38)
-/* script */
-var __vue_script__ = __webpack_require__(39)
-/* template */
-var __vue_template__ = __webpack_require__(40)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/ExampleComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-299e239e", Component.options)
-  } else {
-    hotAPI.reload("data-v-299e239e", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(8)))
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports) {
 
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 39 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-299e239e", module.exports)
-  }
-}
-
-/***/ }),
-/* 41 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \n@import '~bootstrap/scss/bootstrap';\n^\n      File to import not found or unreadable: ~bootstrap/scss/bootstrap.\n      in /Users/mofei/docker-lnmp/work/wwwroot/lafa/resources/sass/app.scss (line 9, column 1)\n    at runLoaders (/Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/webpack/lib/NormalModule.js:195:19)\n    at /Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.done [as callback] (/Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/neo-async/async.js:7974:18)\n    at options.error (/Users/mofei/docker-lnmp/work/wwwroot/lafa/node_modules/node-sass/lib/index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
