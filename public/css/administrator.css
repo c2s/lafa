@@ -1997,8 +1997,8 @@ body .site-demo-nav .layui-nav-item {
   opacity: 0.9;
 }
 
-.navbar-fixed-top {
-  height: 50px;
+.navbar {
+  margin-left: 230px;
   background-color: #18bc9c !important;
 }
 
