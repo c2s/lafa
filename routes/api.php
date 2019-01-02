@@ -38,45 +38,45 @@ $api->version('v1', [
         'limit' => config('api.rate_limits.sign.limit'),
         'expires' => config('api.rate_limits.sign.expires'),
     ], function($api){
-        # 游客可以访问的接口
+        // 游客可以访问的接口
 
-        # 短信验证码
+        // 短信验证码
         $api->post('verificationCodes', 'VerificationCodesController@store')->name('api.verificationCodes.store');
 
-        # 用户注册
+        // 用户注册
         $api->post('users', 'UsersController@store')->name('api.users.store');
 
-        # 图片验证码
+        // 图片验证码
         $api->post('captchas', 'CaptchasController@store')->name('api.captchas.store');
 
-        # 第三方登录
+        // 第三方登录
         $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore')->name('api.socials.authorizations.store');
 
-        # 登录
+        // 登录
         $api->post('authorizations', 'AuthorizationsController@store')->name('api.authorizations.store');
 
-        # 刷新token
+        // 刷新token
         $api->put('authorizations/current', 'AuthorizationsController@update')->name('api.authorizations.update');
 
-        # 删除token
+        // 删除token
         $api->delete('authorizations/current', 'AuthorizationsController@destroy')->name('api.authorizations.destroy');
 
-        # 获取栏目导航
+        // 获取栏目导航
         $api->get('navigation/{navigation_type}', 'NavigationController@index')->name('api.navigation.index');
 
-        # 获取文章列表(包含内容)
+        // 获取文章列表(包含内容)
         $api->get('articles/{category_id}', 'ArticleController@index')->name('api.article.index');
 
-        # 获取单页面内容
+        // 获取单页面内容
         $api->get('pages/{page_id}', 'PageController@show')->name('api.page.show');
 
-        # 获取关于我们内容
+        // 获取关于我们内容
         $api->get('about', 'PageController@about')->name('api.page.about');
 
-        # 获取区块内容
+        // 获取区块内容
         $api->get('blocks/{block_id}', 'BlockController@show')->name('api.block.show');
 
-        # .....
+        // .....
 
 
         // 需要 token 验证的接口

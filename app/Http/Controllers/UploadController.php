@@ -265,4 +265,26 @@ class UploadController extends Controller
         
         
     }
+
+    /**
+     * 图片资源
+     *
+     * @param Request $request
+     */
+    public function images(Request $request)
+    {
+        //获取当前的url
+        $realPath = str_replace('storage/','',$request->path());
+
+        $path = storage_path() .'/app/'. $realPath;
+
+        if(!file_exists($path)){
+            //报404错误
+            abort(404);
+        }
+        //输出图片
+        header('Content-type: image/jpg');
+        echo file_get_contents($path);
+        exit;
+    }
 }
