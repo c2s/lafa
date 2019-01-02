@@ -2002,9 +2002,13 @@ body .site-demo-nav .layui-nav-item {
   background-color: #18bc9c;
 }
 
-.navbar {
+.main-header .navbar {
   margin-left: 230px;
   background-color: #18bc9c !important;
+}
+
+.sidebar-collapse .main-header .navbar {
+  margin-left: 50px !important;
 }
 
 .container-fluid {

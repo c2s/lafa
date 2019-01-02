@@ -114,7 +114,7 @@ li {
   display: none;
 }
 
-.sidebar-collapse .logo-m{
+.sidebar-collapse .logo-m {
   display: inline-block;
 }
 
@@ -124,6 +124,9 @@ li {
   color: #fff;
 }
 
+.main-header .navbar-nav .active {
+  background: #15a589;
+}
 .main-header .navbar-nav>li>a:hover,
 .main-header .navbar-nav>li>a:focus {
   //background: rgba(255, 255, 255, 0.07);

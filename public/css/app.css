@@ -111,6 +111,10 @@ li {
   color: #fff;
 }
 
+.main-header .navbar-nav .active {
+  background: #15a589;
+}
+
 .main-header .navbar-nav > li > a:hover,
 .main-header .navbar-nav > li > a:focus {
   background: #15a589;
