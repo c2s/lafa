@@ -14,6 +14,7 @@
         <!-- Fonts -->
 
         <!-- Styles -->
+        {{--<link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">--}}
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/zui/css/zui.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/zui/lib/bootbox/bootbox.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('plugins/zui/lib/chosen/chosen.min.css')}}">
@@ -22,6 +23,7 @@
         <link rel="stylesheet" href="{{asset('plugins/webuploader/webuploader.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/administrator.css')}}">
+        <!-- import stylesheet -->
         <link rel="apple-touch-icon" href="/favicon.png">
         @yield('styles')
     </head>

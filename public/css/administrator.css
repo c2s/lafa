@@ -2023,3 +2023,79 @@ body .site-demo-nav .layui-nav-item {
   margin-left: 55px;
 }
 
+.btn-primary {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+  background-color: #18bc9c;
+  border-color: #18bc9c;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #18bc9c;
+  border-color: #18bc9c;
+  -webkit-box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  background-color: #18bc9c;
+  background-image: none;
+  border-color: #18bc9c;
+  -webkit-box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #18bc9c;
+  border-color: #18bc9c;
+}
+
+.right-btn {
+  float: right;
+}
+
+.left-btn {
+  float: left;
+}
+
+.tag-nav-wrapper {
+  background: #f0f0f0;
+}
+
+.navbar-nav > li .close-tab {
+  font-size: 10px;
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  margin-top: -6px;
+  z-index: 100;
+  cursor: pointer;
+  color: #eee;
+  display: none;
+}
+
+.navbar-nav > li .close-tab > a {
+  color: black;
+}
+

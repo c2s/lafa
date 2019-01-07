@@ -11,7 +11,7 @@
         </a>
     </div>
     <nav class="navbar navbar-fixed-top bg-primary">
-        <a class="navbar-toggle" href="javascript:;"  data-target=".navbar-collapse"><i
+        <a class="navbar-toggle" href="javascript:;" data-target=".navbar-collapse"><i
                     class="icon icon-th-large"></i></a>
         <div class="collapse navbar-collapse">
             <div class="container-fluid">
@@ -22,6 +22,17 @@
                             <i class="fa fa-dashboard fa-fw fa-fw"></i>
                             <span>控制台</span>
                         </a>
+                    </li>
+                    <li role="presentation" id="tab_277" class="">
+                        <a href="#con_277" node-id="277" aria-controls="277" role="tab" data-toggle="tab">
+                            <i class="icon icon-cog"></i>
+                            <span>自定义搜索</span>
+                            <span class="pull-right-container"> </span>
+                        </a>
+                        <span href="https://www.baidu.com">
+                            <i class="close-tab icon  icon-remove">
+                            </i>
+                        </span>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
