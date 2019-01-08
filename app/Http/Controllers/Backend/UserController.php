@@ -57,7 +57,7 @@ class UserController extends Controller
         $this->authorize('update', $user);
 
         $data = $request->only('name','email','avatar','introduction');
-        $user->update($data);
+        $user->update(array_filter($data));
 
         return redirect()->route('user.edit', $user->id)->with('success', '资料更新成功！');
     }

@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-primary">
+            <div class="info-box bg-dashboard-2">
                 <div class="info-box-icon">
                     <i class="icon icon-user"></i>
                 </div>
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-warning">
+            <div class="info-box bg-dashboard-3">
                 <div class="info-box-icon">
                     <i class="icon icon-bars"></i>
                 </div>
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box bg-danger">
+            <div class="info-box bg-dashboard-4">
                 <div class="info-box-icon">
                     <i class="icon icon-eye-open"></i>
                 </div>

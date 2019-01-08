@@ -43,7 +43,7 @@
                                 <div class="panel">
                                     <div class="panel-body">
                                         <img src="{{ $user->getAvatar() }}" id="image_avatar" class="img-rounded" width="200px" height="200px" alt="">
-                                        <input type="hidden" name="avatar" id="form_avatar" value="{{ old('avatar',$user->avatar) }}" />
+                                        <input type="hidden" name="avatar" id="form_avatar" value="" />
                                         <button id="avatar" type="button" class="btn btn-info uploader-btn-browse"><i class="icon icon-upload"></i> 上传头像</button>
                                     </div>
                                 </div>

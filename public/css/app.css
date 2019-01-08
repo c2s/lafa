@@ -202,7 +202,7 @@ li {
 }
 
 .sidebar-menu > li.active {
-  border-left-color: #039BE5;
+  border-left-color: #18bc9c;
 }
 
 .sidebar-menu li > a > .pull-right-container {
@@ -230,7 +230,7 @@ li {
 
 .sidebar-menu > li > .treeview-menu {
   display: none;
-  background: #242f35;
+  background: #2c3b41;
 }
 
 .sidebar-menu > li.active > .treeview-menu {

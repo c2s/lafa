@@ -2099,3 +2099,18 @@ fieldset[disabled] .btn-primary.active {
   color: black;
 }
 
+.bg-dashboard-2 {
+  color: #fff;
+  background-color: #18bc9c;
+}
+
+.bg-dashboard-3 {
+  color: #fff;
+  background-color: #3498db;
+}
+
+.bg-dashboard-4 {
+  color: #fff;
+  background-color: #605ca8;
+}
+

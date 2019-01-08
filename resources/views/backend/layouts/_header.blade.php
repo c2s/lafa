@@ -17,23 +17,23 @@
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li><a href="javascript:;" data-toggle="push-menu"><i class="icon icon-bars"></i></a></li>
-                    <li role="presentation" id="tab_1" class="active">
-                        <a href="#con_1" node-id="1" aria-controls="1" role="tab" data-toggle="tab">
-                            <i class="fa fa-dashboard fa-fw fa-fw"></i>
-                            <span>控制台</span>
-                        </a>
-                    </li>
-                    <li role="presentation" id="tab_277" class="">
-                        <a href="#con_277" node-id="277" aria-controls="277" role="tab" data-toggle="tab">
-                            <i class="icon icon-cog"></i>
-                            <span>自定义搜索</span>
-                            <span class="pull-right-container"> </span>
-                        </a>
-                        <span href="https://www.baidu.com">
-                            <i class="close-tab icon  icon-remove">
-                            </i>
-                        </span>
-                    </li>
+                    {{--<li role="presentation" id="tab_1" class="active">--}}
+                        {{--<a href="#con_1" node-id="1" aria-controls="1" role="tab" data-toggle="tab">--}}
+                            {{--<i class="fa fa-dashboard fa-fw fa-fw"></i>--}}
+                            {{--<span>控制台</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+                    {{--<li role="presentation" id="tab_277" class="">--}}
+                        {{--<a href="#con_277" node-id="277" aria-controls="277" role="tab" data-toggle="tab">--}}
+                            {{--<i class="icon icon-cog"></i>--}}
+                            {{--<span>自定义搜索</span>--}}
+                            {{--<span class="pull-right-container"> </span>--}}
+                        {{--</a>--}}
+                        {{--<span href="https://www.baidu.com">--}}
+                            {{--<i class="close-tab icon  icon-remove">--}}
+                            {{--</i>--}}
+                        {{--</span>--}}
+                    {{--</li>--}}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @guest
