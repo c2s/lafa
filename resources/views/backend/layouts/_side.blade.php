@@ -9,7 +9,7 @@
                 <a href="{{route('admin.dashboard')}}">
                     <i class="icon icon-dashboard"></i>
                     <span>控制台</span>
-                    <span class="pull-right-container"></span>
+                    <span class="pull-right-container"> <small class="label pull-right bg-blue">hot</small></span>
                 </a>
             </li>
 

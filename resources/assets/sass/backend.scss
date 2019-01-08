@@ -708,3 +708,18 @@ fieldset[disabled] .btn-primary.active {
   color: #fff;
   background-color: #605ca8;
 }
+
+.bg-blue {
+  background-color: #0073b7 !important;
+}
+// login
+
+
+.login-con {
+  position: absolute;
+  right: 160px;
+  top: 50%;
+  -webkit-transform: translateY(-60%);
+  transform: translateY(-60%);
+  width: 300px;
+}

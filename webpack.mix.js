@@ -14,7 +14,7 @@ let mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .js('resources/assets/js/administrator.js', 'public/js')
-   .sass('resources/assets/sass/administrator.scss', 'public/css')
+   .sass('resources/assets/sass/backend.scss', 'public/css')
    .js('resources/assets/js/website.js', 'public/js')
    .sass('resources/assets/sass/website.scss', 'public/css')
    .copyDirectory('resources/assets/plugins', 'public/plugins')
