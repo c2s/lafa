@@ -43,7 +43,7 @@
         }
 
         #login {
-            margin-top: 200px;
+            margin-top: 35%;
             /*margin: 0 auto;*/
             _width: 420px;
             min-height: 230px;
@@ -51,7 +51,7 @@
             border: 1px solid #dfdfdf;
             -moz-border-radius: 3px;
             -webkit-border-radius: 3px;
-            border-radius: 3px;
+            border-radius: 4px;
             -moz-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
             -webkit-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
             box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15)
@@ -119,17 +119,29 @@
             padding: 10px 0 0;
         }
 
+        .login-form {
+            width: 500px;
+        }
+        .bg_image {
+            /*background-image: url('/images/bg_1.png');*/
+        }
+        body {
+            background-image: url('/images/bg_1.png');
+            background-repeat:no-repeat;
+            background-size:cover;
+        }
+
     </style>
 
     @yield('styles')
 </head>
-<body class="layui-container {{ route_class() }}-body">
+<body class="layui-container {{ route_class() }}-body bg_image">
 
 <div id="app" class="{{ route_class() }}-page">
 
     <div class='container'>
 
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-6 col-md-offset-3 login-form">
             <div id='login' class="la-card">
                 <div class='panel-head'>
                     <h4>{{ config('app.name') }}管理系统</h4>
@@ -182,7 +194,7 @@
                                 <div class="ivu-form-item-content">
                                     <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">
                                         <div class="ivu-input-group-prepend" style=""><span><i
-                                                        class="ivu-icon ivu-icon-md-lock" style="font-size: 14px;"></i></span>
+                                                        class="ivu-icon ivu-icon-ios-contacts" style="font-size: 14px;"></i></span>
                                         </div> <!---->
                                         <i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
                                         <input name="captcha" style="width: 200px; float:left; height: 35px"  autocomplete="off" spellcheck="false" type="text" placeholder="请输入验证码"
@@ -203,12 +215,13 @@
 
                             <div class="ivu-form-item"><!---->
 
-                                <label><input  type="checkbox"
-                                              name='remember' {{ old('remember') ? 'checked' : '' }}>
-                                    记住我</label>
+                                <label> <input  type="checkbox" name='remember' {{ old('remember') ? 'checked' : '' }}>&nbsp;&nbsp;记住我</label>
+                            </div>
+                            <div class="ivu-form-item"><!---->
                                 <div class="ivu-form-item-content">
-                                    <button type="submit" class="ivu-btn ivu-btn-primary ivu-btn-long"><!----> <!---->
-                                        <span>登录</span></button> <!----></div>
+                                    <button type="submit" class="ivu-btn ivu-btn-primary ivu-btn-long">
+                                        <span>登录</span></button>
+                                </div>
                             </div>
                         </form>
                     </div>
