@@ -31,6 +31,12 @@ class WelcomeController extends Controller
      * @return mixed
      */
     public function dashboard(){
+        $data = [
+            'totalUsers' => 9854,
+            'TotalViews' => 542323,
+            'totalOrder' => 76534,
+            'totalOrderAmount' => 34532342.123,
+        ];
         return backend_view("dashboard");
     }
 
