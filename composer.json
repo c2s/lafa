@@ -55,8 +55,7 @@
         "nunomaduro/collision": "^2.0",
         "phpunit/phpunit": "^7.0",
         "summerblue/generator": "~0.5",
-        "symfony/thanks": "^1.0",
-        "wanglelecc/generator": "~1.0"
+        "symfony/thanks": "^1.0"
     },
     "config": {
         "optimize-autoloader": true,

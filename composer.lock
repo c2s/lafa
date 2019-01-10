@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "73820c4f4af2bbb1a5b7d3506058962c",
+    "content-hash": "49f5e4b92b3fc2bbc86741fa5d88ef5c",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -8401,68 +8401,6 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2017-04-07T12:08:54+00:00"
-        },
-        {
-            "name": "wanglelecc/generator",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/wanglelecc/generator.git",
-                "reference": "5bdae6aed36bec4187c1e3f2a20b93f30e0ddcb3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wanglelecc/generator/zipball/5bdae6aed36bec4187c1e3f2a20b93f30e0ddcb3",
-                "reference": "5bdae6aed36bec4187c1e3f2a20b93f30e0ddcb3",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0.0"
-            },
-            "require-dev": {
-                "laravel/laravel": "5.5.*",
-                "phpunit/phpunit": "~5.7"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Wanglelecc\\Generator\\GeneratorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Wanglelecc\\Generator\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fernando Brito",
-                    "email": "fernandobritofl@gmail.com"
-                },
-                {
-                    "name": "Summer",
-                    "email": "summer@yousails.com"
-                },
-                {
-                    "name": "Wanglelecc",
-                    "email": "wanglelecc@yousails.com"
-                }
-            ],
-            "description": "Extend Laravel 5.5's generators scaffold.",
-            "keywords": [
-                "generators",
-                "laravel",
-                "laravel5",
-                "scaffold"
-            ],
-            "abandoned": "wanglelecc/generator",
-            "time": "2018-05-07T14:19:18+00:00"
         }
     ],
     "aliases": [],
