@@ -126,16 +126,6 @@ return [
                     "params" => ['desktop'],
                     "query" => [],
                 ],
-                [
-                    "id" => "website.wechat",
-                    "text" => "微信管理",
-                    "permission" => function(){ return Auth::user()->can('manage_wechat'); },
-                    "icon" => "icon-wechat",
-                    "link" => "",
-                    "route" => "wechats.index",
-                    "params" => [],
-                    "query" => [],
-                ],
 
             ],
         ],
@@ -242,6 +232,26 @@ return [
                 "query" => [],
             ],
             */
+            ],
+        ],
+        [
+            "id" => "wechat",
+            "text" => "微信管理",
+            "permission" => function(){ return Auth::user()->can('manage_content'); },
+            "icon" => "icon-bars",
+            "route" => "",
+            "params" => [],
+            "children" => [
+                [
+                    "id" => "website.wechat",
+                    "text" => "微信设置",
+                    "permission" => function(){ return Auth::user()->can('manage_wechat'); },
+                    "icon" => "icon-wechat",
+                    "link" => "",
+                    "route" => "wechats.index",
+                    "params" => [],
+                    "query" => [],
+                ],
             ],
         ],
 
