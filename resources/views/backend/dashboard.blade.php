@@ -145,7 +145,7 @@
 
     <div class="alert alert-danger-light">
         <span>温馨提示:<br/></span>
-        <span>系统将在2019年春节法定假期2月4日（除夕）至2月10日（初六）暂停营业<br/></span>
+        <span>系统将在2019年春节法定假期2月4日（除夕）至2月10日（初六）暂停营业.<br/></span>
     </div>
 
     <div class="panel panel-default panel-intro">
