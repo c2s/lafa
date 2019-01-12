@@ -38,20 +38,21 @@
             font-weight: bold;
         }
 
-        .container {
-            margin: 10% auto 0 auto
-        }
-
         #login {
-            margin-top: 35%;
+            background: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+            position: relative;
+            -webkit-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+            
+            width: 500px;
             /*margin: 0 auto;*/
             _width: 420px;
             min-height: 230px;
-            background-color: #fff;
             border: 1px solid #dfdfdf;
             -moz-border-radius: 3px;
             -webkit-border-radius: 3px;
-            border-radius: 4px;
             -moz-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
             -webkit-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
             box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15)
@@ -106,22 +107,10 @@
             padding: 10px;
         }
 
-        .la-card {
-            background: #fff;
-            border-radius: 4px;
-            font-size: 14px;
-            position: relative;
-            -webkit-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-        }
-
         .form-con {
             padding: 10px 0 0;
         }
 
-        .login-form {
-            width: 500px;
-        }
         .bg_image {
             /*background-image: url('/images/bg_1.png');*/
         }
@@ -141,8 +130,7 @@
 
     <div class='container'>
 
-        <div class="col-md-6 col-md-offset-3 login-form">
-            <div id='login' class="la-card">
+            <div id="login">
                 <div class='panel-head'>
                     <h4>{{ config('app.name') }}管理系统</h4>
                 </div>
@@ -227,7 +215,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         <div class='notice text-center'>
         </div>
