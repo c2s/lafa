@@ -326,6 +326,8 @@
                                                 <div class="font-bold"><i class="icon icon-thumbs-up"></i> <small>点赞次数</small></div>
                                             </div>
                                         </div>
+                                        <h5></h5>
+
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +340,6 @@
                                         <h5>新闻统计</h5>
                                     </div>
                                     <div class="ibox-content">
-
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h1 class="no-margins">{{ $contentTotal['newsCount'] }}</h1>
@@ -349,6 +350,8 @@
                                                 <div class="font-bold"><i class="icon icon-thumbs-up"></i> <small>点赞次数</small></div>
                                             </div>
                                         </div>
+                                        <h5></h5>
+
                                     </div>
                                 </div>
                             </div>
