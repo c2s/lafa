@@ -42,12 +42,12 @@
             background: #fff;
             border-radius: 4px;
             font-size: 14px;
-            position: relative;
+            position: absolute;
             -webkit-transition: all .2s ease-in-out;
             transition: all .2s ease-in-out;
-            
-            width: 500px;
-            /*margin: 0 auto;*/
+            top: 30%;
+            left: 35%;
+            width: 400px;
             _width: 420px;
             min-height: 230px;
             border: 1px solid #dfdfdf;
@@ -127,9 +127,7 @@
 <body class="layui-container {{ route_class() }}-body bg_image">
 
 <div id="app" class="{{ route_class() }}-page">
-
-    <div class='container'>
-
+    <div>
             <div id="login">
                 <div class='panel-head'>
                     <h4>{{ config('app.name') }}管理系统</h4>

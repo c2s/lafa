@@ -31,13 +31,32 @@ class WelcomeController extends Controller
      * @return mixed
      */
     public function dashboard(){
-        $data = [
-            'totalUsers' => 9854,
-            'TotalViews' => 542323,
-            'totalOrder' => 76534,
-            'totalOrderAmount' => 34532342.123,
+
+         $userTotal = [
+            'totalUsers'        => 9854,
+            'totalViews'        => 542323,
+            'totalOrder'        => 76534,
+            'totalOrderAmount'  => 34532342.123,
+            'todayUserRegister' => 198,
+            'todayUserLogin'    => 100,
+            'todayOrder'        => 1864,
+            'pendingOrder'      => 453,
+            '7dayOrder'         => 32,
+            '7dayActivity'      => 100,
         ];
-        return backend_view("dashboard");
+
+        $contentTotal = [
+            'categoryCount'        => 100,
+            'categoryCountTotal'   => 100,
+            'attachmentCount'      => 100,
+            'attachmentCountTotal' => 100,
+            'articleCount'         => 100,
+            'articleStar'          => 100,
+            'newsCount'            => 123123,
+            'newsStar'             => 33,
+        ];
+
+        return backend_view("dashboard", compact("userTotal", "contentTotal"));
     }
 
     public function permissionDenied(){

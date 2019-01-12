@@ -162,36 +162,36 @@
                     <div class="row">
                         <div class="col-sm-3 col-xs-6">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-red"><i class="fa fa-users"></i></span>
+                                <span class="sm-st-icon st-red"><i class="icon-2x icon-group"></i></span>
                                 <div class="sm-st-info">
-                                    <span>{$totaluser}</span>
+                                    <span>{{ $userTotal['totalUsers'] }}</span>
                                     会员总数
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-violet"><i class="fa fa-book"></i></span>
+                                <span class="sm-st-icon st-violet"><i class="icon-2x icon-coffee"></i></span>
                                 <div class="sm-st-info">
-                                    <span>{$totalviews}</span>
+                                    <span>{{ $userTotal['totalViews'] }}</span>
                                     访问总数
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-blue"><i class="fa fa-shopping-bag"></i></span>
+                                <span class="sm-st-icon st-blue"><i class="icon-2x icon-reorder"></i></span>
                                 <div class="sm-st-info">
-                                    <span>{$totalorder}</span>
+                                    <span>{{ $userTotal['totalOrder'] }}</span>
                                     订单总数
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3 col-xs-6">
                             <div class="sm-st clearfix">
-                                <span class="sm-st-icon st-green"><i class="fa fa-cny"></i></span>
+                                <span class="sm-st-icon st-green"><i class="icon-2x icon-sitemap"></i></span>
                                 <div class="sm-st-info">
-                                    <span>{$totalorderamount}</span>
+                                    <span>{{ $userTotal['totalOrderAmount'] }}</span>
                                     订单金额
                                 </div>
                             </div>
@@ -207,60 +207,60 @@
                                 <div class="card-block">
                                     <div class="row row-sm stats-container">
                                         <div class="col-xs-6 stat-col">
-                                            <div class="stat-icon"> <i class="fa fa-rocket"></i> </div>
+                                            <div class="stat-icon"> <i class="icon-2x icon-user"></i> </div>
                                             <div class="stat">
-                                                <div class="value"> {$todayusersignup} </div>
-                                                <div class="name"> {:__('Today user signup')} </div>
+                                                <div class="value"> {{ $userTotal['todayUserRegister'] }}</div>
+                                                <div class="name"> 今日注册 </div>
                                             </div>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-success" style="width: 30%"></div>
                                             </div>
                                         </div>
                                         <div class="col-xs-6 stat-col">
-                                            <div class="stat-icon"> <i class="fa fa-shopping-cart"></i> </div>
+                                            <div class="stat-icon"> <i class="icon-2x icon-exchange"></i> </div>
                                             <div class="stat">
-                                                <div class="value"> {$todayuserlogin} </div>
-                                                <div class="name"> {:__('Today user login')} </div>
+                                                <div class="value"> {{ $userTotal['todayUserLogin'] }} </div>
+                                                <div class="name"> 今日登录 </div>
                                             </div>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-success" style="width: 25%"></div>
                                             </div>
                                         </div>
                                         <div class="col-xs-6  stat-col">
-                                            <div class="stat-icon"> <i class="fa fa-line-chart"></i> </div>
+                                            <div class="stat-icon"> <i class="icon-2x icon-edit"></i> </div>
                                             <div class="stat">
-                                                <div class="value"> {$todayorder} </div>
-                                                <div class="name"> {:__('Today order')} </div>
+                                                <div class="value"> {{ $userTotal['todayOrder'] }} </div>
+                                                <div class="name"> 今日订单 </div>
                                             </div>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-success" style="width: 25%"></div>
                                             </div>
                                         </div>
                                         <div class="col-xs-6  stat-col">
-                                            <div class="stat-icon"> <i class="fa fa-users"></i> </div>
+                                            <div class="stat-icon"> <i class="icon-2x icon-book"></i> </div>
                                             <div class="stat">
-                                                <div class="value"> {$unsettleorder} </div>
-                                                <div class="name"> {:__('Unsettle order')} </div>
+                                                <div class="value"> {{ $userTotal['pendingOrder'] }} </div>
+                                                <div class="name"> 未处理订单 </div>
                                             </div>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-success" style="width: 25%"></div>
                                             </div>
                                         </div>
                                         <div class="col-xs-6  stat-col">
-                                            <div class="stat-icon"> <i class="fa fa-list-alt"></i> </div>
+                                            <div class="stat-icon"> <i class="icon-2x icon-plane"></i> </div>
                                             <div class="stat">
-                                                <div class="value"> {$sevendnu} </div>
-                                                <div class="name"> {:__('Seven dnu')} </div>
+                                                <div class="value"> {{ $userTotal['7dayOrder'] }} </div>
+                                                <div class="name"> 七日新增 </div>
                                             </div>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-success" style="width: 25%"></div>
                                             </div>
                                         </div>
                                         <div class="col-xs-6 stat-col">
-                                            <div class="stat-icon"> <i class="fa fa-dollar"></i> </div>
+                                            <div class="stat-icon"> <i class="icon-2x icon-spinner"></i> </div>
                                             <div class="stat">
-                                                <div class="value"> {$sevendau} </div>
-                                                <div class="name"> {:__('Seven dau')} </div>
+                                                <div class="value"> {{ $userTotal['7dayActivity'] }} </div>
+                                                <div class="name"> 七日活跃 </div>
                                             </div>
                                             <div class="progress">
                                                 <div class="progress-bar progress-bar-success" style="width: 25%"></div>
@@ -281,12 +281,12 @@
                                 <div class="panel-body">
                                     <div class="panel-title">
                                         <span class="label label-success pull-right">实时</span>
-                                        <h5>{:__('Category count')}</h5>
+                                        <h5>分类统计</h5>
                                     </div>
                                     <div class="panel-content">
-                                        <h1 class="no-margins">1234</h1>
-                                        <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> 1234</div>
-                                        <small>{:__('Category count tips')}</small>
+                                        <h1 class="no-margins">{{ $contentTotal['categoryCount'] }}</h1>
+                                        <div class="stat-percent font-bold"><i class="icon icon-sitemap"></i> {{ $contentTotal['categoryCount'] }}</div>
+                                        <small>当前分类总记录数</small>
                                     </div>
                                 </div>
                             </div>
@@ -296,12 +296,12 @@
                                 <div class="panel-body">
                                     <div class="ibox-title">
                                         <span class="label label-info pull-right">实时</span>
-                                        <h5>{:__('Attachment count')}</h5>
+                                        <h5>附件统计</h5>
                                     </div>
                                     <div class="ibox-content">
-                                        <h1 class="no-margins">1043</h1>
-                                        <div class="stat-percent font-bold text-gray"><i class="fa fa-modx"></i> 2592</div>
-                                        <small>{:__('Attachment count tips')}</small>
+                                        <h1 class="no-margins">{{ $contentTotal['attachmentCount'] }}</h1>
+                                        <div class="stat-percent font-bold"><i class="icon icon-upload-alt"></i> {{ $contentTotal['attachmentCountTotal'] }}</div>
+                                        <small>当前上传的附件数量</small>
                                     </div>
                                 </div>
                             </div>
@@ -312,18 +312,18 @@
                                 <div class="panel-body">
                                     <div class="ibox-title">
                                         <span class="label label-primary pull-right">实时</span>
-                                        <h5>{:__('Article count')}</h5>
+                                        <h5>文章统计</h5>
                                     </div>
                                     <div class="ibox-content">
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h1 class="no-margins">1234</h1>
-                                                <div class="font-bold"><i class="fa fa-commenting"></i> <small>{:__('Comment count')}</small></div>
+                                                <h1 class="no-margins">{{ $contentTotal['articleCount'] }}</h1>
+                                                <div class="font-bold"><i class="icon-comment-alt"></i> <small>评论次数</small></div>
                                             </div>
                                             <div class="col-md-6">
-                                                <h1 class="no-margins">6754</h1>
-                                                <div class="font-bold"><i class="fa fa-heart"></i> <small>{:__('Like count')}</small></div>
+                                                <h1 class="no-margins">{{ $contentTotal['articleStar'] }}</h1>
+                                                <div class="font-bold"><i class="icon icon-thumbs-up"></i> <small>点赞次数</small></div>
                                             </div>
                                         </div>
                                     </div>
@@ -335,18 +335,18 @@
                                 <div class="panel-body">
                                     <div class="ibox-title">
                                         <span class="label label-primary pull-right">实时</span>
-                                        <h5>{:__('News count')}</h5>
+                                        <h5>新闻统计</h5>
                                     </div>
                                     <div class="ibox-content">
 
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h1 class="no-margins">5302</h1>
-                                                <div class="font-bold"><i class="fa fa-commenting"></i> <small>{:__('Comment count')}</small></div>
+                                                <h1 class="no-margins">{{ $contentTotal['newsCount'] }}</h1>
+                                                <div class="font-bold"><i class="icon-comment-alt"></i> <small>评论次数</small></div>
                                             </div>
                                             <div class="col-md-6">
-                                                <h1 class="no-margins">8205</h1>
-                                                <div class="font-bold"><i class="fa fa-user"></i> <small>{:__('Like count')}</small></div>
+                                                <h1 class="no-margins">{{ $contentTotal['newsStar'] }}</h1>
+                                                <div class="font-bold"><i class="icon icon-thumbs-up"></i> <small>点赞次数</small></div>
                                             </div>
                                         </div>
                                     </div>
@@ -361,7 +361,7 @@
                                 <div class="box-header">
                                     <h3 class="box-title">{:__('Recent news')}</h3>
                                     <div class="box-tools pull-right">
-                                        <a href="https://www.fastadmin.net" target="_blank" class="btn btn-box-tool">{:__('More')}</a>
+                                        <a href="/" target="_blank" class="btn btn-box-tool">{:__('More')}</a>
                                     </div>
                                 </div>
                                 <div class="box-body" id="news-list">
@@ -374,7 +374,7 @@
                                 <div class="box-header">
                                     <h3 class="box-title">{:__('Recent discussion')}</h3>
                                     <div class="box-tools pull-right">
-                                        <a href="https://forum.fastadmin.net" class="btn btn-box-tool">{:__('More')}</a>
+                                        <a href="/" class="btn btn-box-tool">{:__('More')}</a>
                                     </div>
                                 </div>
                                 <div class="box-body" id="discussion-list">
@@ -384,53 +384,66 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="box box-info">
-                                <div class="box-header"><h3 class="box-title">{:__('Server info')}</h3></div>
+                                <div class="box-header"><h3 class="box-title">服务器信息</h3></div>
                                 <div class="box-body">
                                     <table class="table table-striped">
                                         <tbody>
                                         <tr>
-                                            <td width="140">{:__('FastAdmin version')}</td>
-                                            <td>{$Think.config.fastadmin.version} <a href="javascript:;" class="btn btn-xs btn-checkversion">检查最新版</a></td>
+                                            <td width="100">产品名称</td>
+                                            <td><a target="_blank" href="https://www.Lafa.cn">Lafa</a></td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('FastAdmin addon version')}</td>
-                                            <td>{$addonversion}</td>
+                                            <td>核心框架</td>
+                                            <td>Laravel / {{ app()->version() }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Sapi name')}</td>
-                                            <td>{:php_sapi_name()}</td>
+                                            <td>开发作者</td>
+                                            <td><a target="_blank" href="https://github.com/imofei">莫非</a></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>系统时区</td>
+                                            <td>{{ config('app.timezone') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Debug mode')}</td>
-                                            <td>{$Think.config.app_debug?__('Yes'):__('No')}</td>
+                                            <td>语言环境</td>
+                                            <td>{{ config('app.locale') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Software')}</td>
-                                            <td>{$Think.server.SERVER_SOFTWARE}</td>
+                                            <td>系统模式</td>
+                                            <td>{{ config('app.env') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Upload mode')}</td>
-                                            <td>{$uploadmode}</td>
+                                            <td>系统URL</td>
+                                            <td>{{ config('app.url') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Upload url')}</td>
-                                            <td>{$config.upload.uploadurl}</td>
+                                            <td width="100">操作系统</td>
+                                            <td>{{ php_uname() }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Upload Cdn url')}</td>
-                                            <td>{$config.upload.cdnurl}</td>
+                                            <td>运行环境</td>
+                                            <td>{{ array_get($_SERVER, 'SERVER_SOFTWARE') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Timezone')}</td>
-                                            <td>{:date_default_timezone_get()}</td>
+                                            <td>PHP版本</td>
+                                            <td>PHP / {{PHP_VERSION}}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Cdn url')}</td>
-                                            <td>__CDN__</td>
+                                            <td>缓存驱动</td>
+                                            <td>{{ config('cache.default') }}</td>
                                         </tr>
                                         <tr>
-                                            <td>{:__('Language')}</td>
-                                            <td>{$config.language}</td>
+                                            <td>会话驱动</td>
+                                            <td>{{ config('session.driver') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>队列驱动</td>
+                                            <td>{{ config('queue.default') }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>文件系统</td>
+                                            <td>{{ config('filesystems.default') }}</td>
                                         </tr>
                                         </tbody></table>
                                 </div>
@@ -501,89 +514,6 @@
                     {{--<span class="info-box-number">66--}}
                         {{--<small>元</small>--}}
                     {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
-    {{--<div class="row">--}}
-        {{--<div class="col-md-6">--}}
-            {{--<div class="panel">--}}
-                {{--<div class="panel-heading">--}}
-                    {{--<div class="panel-title">产品信息</div>--}}
-                {{--</div>--}}
-                {{--<div class="panel-body">--}}
-                    {{--<table class="table table-info">--}}
-                        {{--<tr>--}}
-                            {{--<td width="100">产品名称</td>--}}
-                            {{--<td><a target="_blank" href="https://www.Lafa.cn">Lafa</a></td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>核心框架</td>--}}
-                            {{--<td>Laravel / {{ app()->version() }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>开发作者</td>--}}
-                            {{--<td><a target="_blank" href="https://github.com/imofei">莫非</a></td>--}}
-                        {{--</tr>--}}
-
-                        {{--<tr>--}}
-                            {{--<td>系统时区</td>--}}
-                            {{--<td>{{ config('app.timezone') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>语言环境</td>--}}
-                            {{--<td>{{ config('app.locale') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>系统模式</td>--}}
-                            {{--<td>{{ config('app.env') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>系统URL</td>--}}
-                            {{--<td>{{ config('app.url') }}</td>--}}
-                        {{--</tr>--}}
-
-                    {{--</table>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-md-6">--}}
-            {{--<div class="panel">--}}
-                {{--<div class="panel-heading">--}}
-                    {{--<div class="panel-title">服务器信息</div>--}}
-                {{--</div>--}}
-                {{--<div class="panel-body">--}}
-                    {{--<table class="table table-info">--}}
-                        {{--<tr>--}}
-                            {{--<td width="100">操作系统</td>--}}
-                            {{--<td>{{ php_uname() }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>运行环境</td>--}}
-                            {{--<td>{{ array_get($_SERVER, 'SERVER_SOFTWARE') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>PHP版本</td>--}}
-                            {{--<td>PHP / {{PHP_VERSION}}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>缓存驱动</td>--}}
-                            {{--<td>{{ config('cache.default') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>会话驱动</td>--}}
-                            {{--<td>{{ config('session.driver') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>队列驱动</td>--}}
-                            {{--<td>{{ config('queue.default') }}</td>--}}
-                        {{--</tr>--}}
-                        {{--<tr>--}}
-                            {{--<td>文件系统</td>--}}
-                            {{--<td>{{ config('filesystems.default') }}</td>--}}
-                        {{--</tr>--}}
-                    {{--</table>--}}
                 {{--</div>--}}
             {{--</div>--}}
         {{--</div>--}}
