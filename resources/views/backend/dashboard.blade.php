@@ -141,6 +141,24 @@
             color: #fff;
             background-color: #03b8cf;
         }
+        .box {
+            position: relative;
+            border-radius: 3px;
+            background: #ffffff;
+            border-top: 3px solid #d2d6de;
+            margin-bottom: 20px;
+            width: 100%;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+        }
+        .box.box-success {
+            border-top-color: #18bc9c;
+        }
+        .box.box-danger {
+            border-top-color: #e74c3c;
+        }
+        .box.box-info {
+            border-top-color: #3498db;
+        }
     </style>
 
     <div class="alert alert-danger-light">
@@ -362,22 +380,32 @@
                         <div class="col-lg-4">
                             <div class="box box-danger">
                                 <div class="box-header">
-                                    <h3 class="box-title">{:__('Recent news')}</h3>
+                                    <h3 class="box-title">最新新闻</h3>
                                     <div class="box-tools pull-right">
-                                        <a href="/" target="_blank" class="btn btn-box-tool">{:__('More')}</a>
+                                        <a href="/" target="_blank" class="btn btn-box-tool">更多</a>
                                     </div>
                                 </div>
                                 <div class="box-body" id="news-list">
-
+                                    @if($articles->count())
+                                        <ul class="nav nav-stacked">
+                                            @foreach($articles as $index => $article)
+                                                <li>
+                                                    <a href="">{{ $article->title }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <div class="alert alert-info alert-block">暂无数据</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="box box-success">
                                 <div class="box-header">
-                                    <h3 class="box-title">{:__('Recent discussion')}</h3>
+                                    <h3 class="box-title">最新文章</h3>
                                     <div class="box-tools pull-right">
-                                        <a href="/" class="btn btn-box-tool">{:__('More')}</a>
+                                        <a href="/" class="btn btn-box-tool">更多</a>
                                     </div>
                                 </div>
                                 <div class="box-body" id="discussion-list">
@@ -464,62 +492,4 @@
             </div>
         </div>
     </div>
-
-
-
-    {{--<div class="row">--}}
-        {{--<div class="col-md-3 col-sm-6 col-xs-12">--}}
-            {{--<div class="info-box bg-info">--}}
-                {{--<div class="info-box-icon">--}}
-                    {{--<i class="icon icon-file-text"></i>--}}
-                {{--</div>--}}
-                {{--<div class="info-box-content">--}}
-                    {{--<span class="info-box-text">新增订单</span>--}}
-                    {{--<span class="info-box-number">320--}}
-                        {{--<small>单</small>--}}
-                    {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-md-3 col-sm-6 col-xs-12">--}}
-            {{--<div class="info-box bg-dashboard-2">--}}
-                {{--<div class="info-box-icon">--}}
-                    {{--<i class="icon icon-user"></i>--}}
-                {{--</div>--}}
-                {{--<div class="info-box-content">--}}
-                    {{--<span class="info-box-text">新增用户</span>--}}
-                    {{--<span class="info-box-number">90--}}
-                        {{--<small>个</small>--}}
-                    {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-md-3 col-sm-6 col-xs-12">--}}
-            {{--<div class="info-box bg-dashboard-3">--}}
-                {{--<div class="info-box-icon">--}}
-                    {{--<i class="icon icon-bars"></i>--}}
-                {{--</div>--}}
-                {{--<div class="info-box-content">--}}
-                    {{--<span class="info-box-text">在售商品</span>--}}
-                    {{--<span class="info-box-number">129--}}
-                        {{--<small>种</small>--}}
-                    {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-        {{--<div class="col-md-3 col-sm-6 col-xs-12">--}}
-            {{--<div class="info-box bg-dashboard-4">--}}
-                {{--<div class="info-box-icon">--}}
-                    {{--<i class="icon icon-eye-open"></i>--}}
-                {{--</div>--}}
-                {{--<div class="info-box-content">--}}
-                    {{--<span class="info-box-text">库存预警</span>--}}
-                    {{--<span class="info-box-number">66--}}
-                        {{--<small>元</small>--}}
-                    {{--</span>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
 @endsection

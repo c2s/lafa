@@ -9,6 +9,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -30,7 +32,7 @@ class WelcomeController extends Controller
      * 仪表盘
      * @return mixed
      */
-    public function dashboard(){
+    public function dashboard($navigation = 0, Article $article){
 
          $userTotal = [
             'totalUsers'        => 9854,
@@ -56,7 +58,9 @@ class WelcomeController extends Controller
             'newsStar'             => 33,
         ];
 
-        return backend_view("dashboard", compact("userTotal", "contentTotal"));
+        $articles = $article->where('type', '=', 'article')->paginate(10);
+
+        return backend_view("dashboard", compact("userTotal", "contentTotal", "navigation", "articles"));
     }
 
     public function permissionDenied(){
@@ -68,4 +72,5 @@ class WelcomeController extends Controller
         // 否则使用视图
         return backend_view('permission_denied');
     }
+
 }
