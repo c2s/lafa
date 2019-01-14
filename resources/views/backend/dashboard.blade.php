@@ -409,7 +409,17 @@
                                     </div>
                                 </div>
                                 <div class="box-body" id="discussion-list">
-
+                                    @if($articles->count())
+                                        <ul class="nav nav-stacked">
+                                            @foreach($articles as $index => $article)
+                                                <li>
+                                                    <a href="">{{ $article->title }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <div class="alert alert-info alert-block">暂无数据</div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
