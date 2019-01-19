@@ -261,28 +261,18 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
 
-//                        axios({
-//                            method: 'post',
-//                            url: '/admin/login',
-//                            data: {
-//                                firstName: 'Fred',
-//                                lastName: 'Flintstone'
-//                            },
-//                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-//                        }).then(function (response) {
-//                            console.log(response);
-//                        }).catch(function (error) {
-//                                console.log(error);
-//                            });
-                        axios.post('/admin/login', this.form,{headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
-                            .then(function (response) {
-                                console.log(response);
-                            })
-                            .catch(function (error) {
-                                alert(error);
-                                console.log(error);
-                            });
-                        this.$Message.success('Success!');
+                       axios({
+                           method: 'post',
+                           url: '/admin/login',
+                           data: this.form,
+                           // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                       }).then(function (response) {
+                           console.log(response);
+                       }).catch(function (error) {
+                           alert(error.response.data.errors.captcha[0]);
+                           this.$Message.error(error.response.data.errors.captcha[0]);
+                           });
+                        // this.$Message.success('Success!');
                     } else {
                         this.$Message.error('请检查邮箱密码是否有误!');
                     }
