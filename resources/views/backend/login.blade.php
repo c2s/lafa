@@ -37,20 +37,12 @@
         .login {
             top: 20%;
             margin-left:auto;margin-right:auto;
-            width: 500px;
+            width: 400px;
             height: 400px;
         }
-
-        /*.submitForm {*/
-            /*width: 300px;*/
-        /*}*/
-
-        /*.submitBtn {*/
-            /*margin-top: 30px;*/
-            /*margin-left: 100px;*/
-            /*width: 400px;*/
-        /*}*/
-
+        .login-logo {
+            text-align:center;
+        }
     </style>
 
     @yield('styles')
@@ -66,22 +58,26 @@
     <row class="main card-main">
         <i-col span="100">
             <card class="login">
-                <p slot="title">{{ config('app.name') }}管理系统</p>
-                <i-form ref="form" :model="form" :rules="ruleCustom" :label-width="60">
+                {{--<p slot="title">{{ config('app.name') }}管理系统</p>--}}
+                <div class="login-logo">
+                    <span style="font-size: 50px; font-weight: 800;">{{ config('app.name') }}</span>
+{{--                    <img src="{{asset('images/logo-black.png')}}" alt="" style="width: 200px; height: 70px;">--}}
+                </div>
+                <i-form ref="form" :model="form" :rules="ruleCustom" :label-width="0">
                     <input type="hidden" v-model="form._token">
-                    <form-item label="邮箱" prop="email">
-                        <i-input type="text" v-model="form.email" placeholder="请输入邮箱">
-                            <icon type="ios-person" slot="prepend"></icon>
+                    <form-item label="" prop="email">
+                        <i-input type="text" v-model="form.email" placeholder="请输入Email">
+                            <icon type="ios-person" slot="prepend" size="16"></icon>
                         </i-input>
                     </form-item>
-                    <form-item label="密码" prop="password">
-                        <i-input type="password" v-model="form.password">
-                            <icon type="md-lock" slot="prepend"></icon>
+                    <form-item label="" prop="password">
+                        <i-input type="password" v-model="form.password" placeholder="亲输入密码">
+                            <icon type="md-lock" slot="prepend" size="13"></icon>
                         </i-input>
                     </form-item>
-                    <form-item label="验证码" prop="captcha">
-                        <i-input type="text" v-model="form.captcha" number>
-                            <icon type="ios-train" slot="prepend"></icon>
+                    <form-item label="" prop="captcha">
+                        <i-input type="text" v-model="form.captcha" placeholder="请输入验证码"  number>
+                            <icon type="ios-train" slot="prepend" size="14"></icon>
                         </i-input>
                     </form-item>
                     <form-item label="" prop="interest">
@@ -253,24 +249,24 @@
                     captcha: [
                         { validator: validateCode, trigger: 'blur' }
                     ]
-                }
+                },
             }
         },
         methods: {
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-
-                       axios({
+                        axios({
                            method: 'post',
                            url: '/admin/login',
                            data: this.form,
                            // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                        }).then(function (response) {
                            console.log(response);
-                       }).catch(function (error) {
-                           alert(error.response.data.errors.captcha[0]);
-                           this.$Message.error(error.response.data.errors.captcha[0]);
+
+                        }).catch(function (error) {
+                           // alert(error.response.data.errors.captcha[0]);
+                           $Message.error(error.response.data.errors.captcha[0]);
                            });
                         // this.$Message.success('Success!');
                     } else {
