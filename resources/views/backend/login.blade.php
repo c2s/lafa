@@ -15,8 +15,7 @@
     <!-- Fonts -->
 
     <!-- Styles -->
-    <link href="{{asset('plugins/zui/css/zui.min.css')}}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="{{asset('plugins/iview/iview.css')}}">
+    {{--<link href="{{asset('plugins/zui/css/zui.min.css')}}" rel="stylesheet" type="text/css">--}}
     <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
     <link rel="apple-touch-icon" href="/favicon.png">
 
@@ -24,204 +23,268 @@
         body {
             background-color: #f6f5f5;
             padding-top: 0;
-        }
-
-        .user-control-nav {
-            margin-bottom: 20px;
-        }
-
-        .page-content {
-            padding: 0;
-        }
-
-        .text-bold {
-            font-weight: bold;
-        }
-
-        #login {
-            background: #fff;
-            border-radius: 4px;
-            font-size: 14px;
-            position: absolute;
-            -webkit-transition: all .2s ease-in-out;
-            transition: all .2s ease-in-out;
-            top: 30%;
-            left: 35%;
-            width: 400px;
-            _width: 420px;
-            min-height: 230px;
-            border: 1px solid #dfdfdf;
-            -moz-border-radius: 3px;
-            -webkit-border-radius: 3px;
-            -moz-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
-            -webkit-box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15);
-            box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.15)
-        }
-
-        #login .panel-head {
-            border-bottom: 1px solid #e8eaec;
-            padding: 14px 16px;
-            line-height: 1;
-        }
-
-        #login .panel-head h4 {
-            margin: 0 0 0 20px;
-            padding: 0;
-            line-height: 55px;
-            font-size: 14px
-        }
-
-        #login .panel-actions {
-            float: right;
-            position: absolute;
-            right: 15px;
-            top: 12px;
-            padding: 0
-        }
-
-        #login .panel-actions .dropdown {
-            display: inline-block;
-            margin-right: 2px
-        }
-
-        #login #submit {
-            min-width: 100px;
-        }
-
-        .panel-body {
-            /*padding: 20px 20px;*/
-            padding: 16px;
-        }
-
-        .table-form th {
-            text-align: right;
-            vertical-align: middle;
-        }
-
-        .table-form th, .table-form td {
-            padding: 8px 5px;
-            border: none;
-        }
-
-        .notice {
-            padding: 10px;
-        }
-
-        .form-con {
-            padding: 10px 0 0;
-        }
-
-        .bg_image {
-            /*background-image: url('/images/bg_1.png');*/
-        }
-        body {
             background-image: url('/images/bg_1.png');
             background-repeat:no-repeat;
             background-size:cover;
         }
+        .card-main {
+            position: absolute;
+            top: 30%;
+            width: 100%;
+            height: 100%;
+        }
 
+        .login {
+            top: 20%;
+            margin-left:auto;margin-right:auto;
+            width: 400px;
+            height: 400px;
+        }
+        .login-logo {
+            text-align:center;
+        }
     </style>
 
     @yield('styles')
 </head>
 <body class="layui-container {{ route_class() }}-body bg_image">
 
-<div id="app" class="{{ route_class() }}-page">
-    <div>
-            <div id="login">
-                <div class='panel-head'>
-                    <h4>{{ config('app.name') }}管理系统</h4>
+
+
+
+
+
+<div id="app">
+    <row class="main card-main">
+        <i-col span="100">
+            <card class="login">
+                {{--<p slot="title">{{ config('app.name') }}管理系统</p>--}}
+                <div class="login-logo">
+                    <span style="font-size: 50px; font-weight: 800;">{{ config('app.name') }}</span>
+{{--                    <img src="{{asset('images/logo-black.png')}}" alt="" style="width: 200px; height: 70px;">--}}
                 </div>
-                <div class="panel-body" id="loginForm">
+                <i-form ref="form" :model="form" :rules="ruleCustom" :label-width="0">
+                    <input type="hidden" v-model="form._token">
+                    <form-item label="" prop="email">
+                        <i-input type="text" v-model="form.email" placeholder="请输入Email">
+                            <icon type="ios-person" slot="prepend" size="16"></icon>
+                        </i-input>
+                    </form-item>
+                    <form-item label="" prop="password">
+                        <i-input type="password" v-model="form.password" placeholder="亲输入密码">
+                            <icon type="md-lock" slot="prepend" size="13"></icon>
+                        </i-input>
+                    </form-item>
+                    <form-item label="" prop="captcha">
+                        <i-input type="text" v-model="form.captcha" placeholder="请输入验证码"  number>
+                            <icon type="ios-train" slot="prepend" size="14"></icon>
+                        </i-input>
+                    </form-item>
+                    <form-item label="" prop="interest">
+                        <checkbox-group v-model="form.remember">
+                            <checkbox label="记住登录"></checkbox>
+                            <div class="" style="float: right">
+                                <img class="img-rounded captcha" src="{{ captcha_src('login') }}"
+                                     onclick="this.src='{{ captcha_src("login") }}?'+Math.random()"
+                                     title="点击图片重新获取验证码">
+                            </div>
+                        </checkbox-group>
+                    </form-item>
+                    <form-item>
+                        <i-button class="ivu-btn-long" type="primary" @click="handleSubmit('form')">登录</i-button>
+                    </form-item>
+                </i-form>
+            </card>
+        </i-col>
+    </row>
+</div>
+
+
+{{--<div id="app1" class="{{ route_class() }}-page">--}}
+    {{--<div>--}}
+            {{--<div id="login">--}}
+                {{--<div class='panel-head'>--}}
+                    {{--<h4>{{ config('app.name') }}管理系统</h4>--}}
+                {{--</div>--}}
+                {{--<div class="panel-body" id="loginForm">--}}
 
                     {{--@include('backend::layouts._message')--}}
                     {{--@include('backend::layouts._error')--}}
-                    <div class="form-con">
-                        <form autocomplete="off" class="ivu-form ivu-form-label-right" method="POST" action="{{ route('admin.login') }}">
-                            {{ csrf_field() }}
-                            <div class="ivu-form-item ivu-form-item-required @if ($errors->has('email')) has-error @endif"><!---->
-                                <div class="ivu-form-item-content">
-                                    <div class=" ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">
-                                        <div class="ivu-input-group-prepend" style=""><span><i
-                                                        class="ivu-icon ivu-icon-ios-person"
-                                                        style="font-size: 16px;"></i></span></div> <!----> <i
-                                                class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
-                                        <input name="email" autocomplete="off" spellcheck="false" type="text" placeholder="请输入Email"
-                                               class="ivu-input ivu-input-default">
-                                        <!----></div>
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                <strong>{{ $errors->first('email') }}</strong>
-                            </span>
-                                @endif
-                                    <!----></div>
-                            </div>
+                    {{--<div class="form-con">--}}
+                        {{--<form autocomplete="off" class="ivu-form ivu-form-label-right" method="POST" action="{{ route('admin.login') }}">--}}
+                            {{--{{ csrf_field() }}--}}
+                            {{--<div class="ivu-form-item ivu-form-item-required @if ($errors->has('email')) has-error @endif"><!---->--}}
+                                {{--<div class="ivu-form-item-content">--}}
+                                    {{--<div class=" ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">--}}
+                                        {{--<div class="ivu-input-group-prepend" style=""><span><i--}}
+                                                        {{--class="ivu-icon ivu-icon-ios-person"--}}
+                                                        {{--style="font-size: 16px;"></i></span></div> <!----> <i--}}
+                                                {{--class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>--}}
+                                        {{--<input name="email" autocomplete="off" spellcheck="false" type="text" placeholder="请输入Email"--}}
+                                               {{--class="ivu-input ivu-input-default">--}}
+                                        {{--<!----></div>--}}
+                                    {{--@if ($errors->has('email'))--}}
+                                        {{--<span class="help-block">--}}
+                                {{--<strong>{{ $errors->first('email') }}</strong>--}}
+                            {{--</span>--}}
+                                {{--@endif--}}
+                                    {{--<!----></div>--}}
+                            {{--</div>--}}
 
-                            <div class="ivu-form-item ivu-form-item-required @if ($errors->has('password')) has-error @endif"><!---->
-                                <div class="ivu-form-item-content">
-                                    <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">
-                                        <div class="ivu-input-group-prepend" style=""><span><i
-                                                        class="ivu-icon ivu-icon-md-lock" style="font-size: 14px;"></i></span>
-                                        </div> <!----> <i
-                                                class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
-                                        <input name="password" autocomplete="off" spellcheck="false" type="password" placeholder="请输入密码"
-                                               class="ivu-input ivu-input-default">
-                                        <!----></div>
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                <strong>{{ $errors->first('password') }}</strong>
-                            </span>
-                                @endif
-                                    <!----></div>
-                            </div>
+                            {{--<div class="ivu-form-item ivu-form-item-required @if ($errors->has('password')) has-error @endif"><!---->--}}
+                                {{--<div class="ivu-form-item-content">--}}
+                                    {{--<div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">--}}
+                                        {{--<div class="ivu-input-group-prepend" style=""><span><i--}}
+                                                        {{--class="ivu-icon ivu-icon-md-lock" style="font-size: 14px;"></i></span>--}}
+                                        {{--</div> <!----> <i--}}
+                                                {{--class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>--}}
+                                        {{--<input name="password" autocomplete="off" spellcheck="false" type="password" placeholder="请输入密码"--}}
+                                               {{--class="ivu-input ivu-input-default">--}}
+                                        {{--<!----></div>--}}
+                                    {{--@if ($errors->has('password'))--}}
+                                        {{--<span class="help-block">--}}
+                                {{--<strong>{{ $errors->first('password') }}</strong>--}}
+                            {{--</span>--}}
+                                {{--@endif--}}
+                                    {{--<!----></div>--}}
+                            {{--</div>--}}
 
 
-                            <div class="ivu-form-item ivu-form-item-required @if ($errors->has('captcha')) has-error @endif"><!---->
-                                <div class="ivu-form-item-content">
-                                    <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">
-                                        <div class="ivu-input-group-prepend" style=""><span><i
-                                                        class="ivu-icon ivu-icon-ios-contacts" style="font-size: 14px;"></i></span>
-                                        </div> <!---->
-                                        <i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>
-                                        <input name="captcha" style="width: 200px; float:left; height: 35px"  autocomplete="off" spellcheck="false" type="text" placeholder="请输入验证码"
-                                               class="ivu-input ivu-input-default">
-                                        <div class="" style="float: right">
-                                            <img class="img-rounded captcha" src="{{ captcha_src('login') }}"
-                                                 onclick="this.src='{{ captcha_src("login") }}?'+Math.random()"
-                                                 title="点击图片重新获取验证码">
-                                        </div>
-                                        <!----></div>
-                                    @if ($errors->has('captcha'))
-                                        <span class="help-block">
-                                <strong>{{ $errors->first('captcha') }}</strong>
-                            </span>
-                                @endif
-                                    <!----></div>
-                            </div>
+                            {{--<div class="ivu-form-item ivu-form-item-required @if ($errors->has('captcha')) has-error @endif"><!---->--}}
+                                {{--<div class="ivu-form-item-content">--}}
+                                    {{--<div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">--}}
+                                        {{--<div class="ivu-input-group-prepend" style=""><span><i--}}
+                                                        {{--class="ivu-icon ivu-icon-ios-contacts" style="font-size: 14px;"></i></span>--}}
+                                        {{--</div> <!---->--}}
+                                        {{--<i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>--}}
+                                        {{--<input name="captcha" style="width: 200px; float:left; height: 35px"  autocomplete="off" spellcheck="false" type="text" placeholder="请输入验证码"--}}
+                                               {{--class="ivu-input ivu-input-default">--}}
+                                        {{--<div class="" style="float: right">--}}
+                                            {{--<img class="img-rounded captcha" src="{{ captcha_src('login') }}"--}}
+                                                 {{--onclick="this.src='{{ captcha_src("login") }}?'+Math.random()"--}}
+                                                 {{--title="点击图片重新获取验证码">--}}
+                                        {{--</div>--}}
+                                        {{--<!----></div>--}}
+                                    {{--@if ($errors->has('captcha'))--}}
+                                        {{--<span class="help-block">--}}
+                                {{--<strong>{{ $errors->first('captcha') }}</strong>--}}
+                            {{--</span>--}}
+                                {{--@endif--}}
+                                    {{--<!----></div>--}}
+                            {{--</div>--}}
 
-                            <div class="ivu-form-item"><!---->
+                            {{--<div class="ivu-form-item"><!---->--}}
 
-                                <label> <input  type="checkbox" name='remember' {{ old('remember') ? 'checked' : '' }}>&nbsp;&nbsp;记住我</label>
-                            </div>
-                            <div class="ivu-form-item"><!---->
-                                <div class="ivu-form-item-content">
-                                    <button type="submit" class="ivu-btn ivu-btn-primary ivu-btn-long">
-                                        <span>登录</span></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                                {{--<label> <input  type="checkbox" name='remember' {{ old('remember') ? 'checked' : '' }}>&nbsp;&nbsp;记住我</label>--}}
+                            {{--</div>--}}
+                            {{--<div class="ivu-form-item"><!---->--}}
+                                {{--<div class="ivu-form-item-content">--}}
+                                    {{--<button type="submit" class="ivu-btn ivu-btn-primary ivu-btn-long">--}}
+                                        {{--<span>登录</span></button>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--</form>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-        <div class='notice text-center'>
-        </div>
-    </div>
+        {{--<div class='notice text-center'>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
-</div>
+{{--</div>--}}
 
 <!-- Scripts -->
 <script src="{{asset('js/app.js')}}"></script>
+
+<script>
+
+    var Main = {
+        data () {
+            const validateEmail = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('邮箱不能为空!'));
+                } else {
+                    callback();
+                }
+            };
+            const validatePassword= (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('密码不能为空!'));
+                } else {
+                    callback();
+                }
+            };
+            const validateCode = (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error('验证码不能为空!'));
+                }
+                // 模拟异步验证效果
+                setTimeout(() => {
+//                    if (value > 4) {
+//                        callback(new Error('必须是4位验证码'));
+//                    } else {
+//                        callback();
+//                    }
+                    callback();
+
+                }, 1000);
+            };
+
+            return {
+                form: {
+                    _token: window.Laravel.csrfToken,
+                    email: '',
+                    password: '',
+                    captcha: '',
+                    remember: []
+                },
+                ruleCustom: {
+                    email: [
+                        { validator: validateEmail, trigger: 'blur' }
+                    ],
+                    password: [
+                        { validator: validatePassword, trigger: 'blur' }
+                    ],
+                    captcha: [
+                        { validator: validateCode, trigger: 'blur' }
+                    ]
+                },
+            }
+        },
+        methods: {
+            handleSubmit (name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        axios({
+                           method: 'post',
+                           url: '/admin/login',
+                           data: this.form,
+                           // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                       }).then(function (response) {
+                           console.log(response);
+
+                        }).catch(function (error) {
+                           // alert(error.response.data.errors.captcha[0]);
+                           $Message.error(error.response.data.errors.captcha[0]);
+                           });
+                        // this.$Message.success('Success!');
+                    } else {
+                        this.$Message.error('请检查邮箱密码是否有误!');
+                    }
+                })
+            },
+            handleReset (name) {
+                this.$refs[name].resetFields();
+            }
+        }
+    }
+
+    var Component = Vue.extend(Main);
+    new Component().$mount('#app')
+</script>
+
+
 @yield('scripts')
 </body>
 </html>

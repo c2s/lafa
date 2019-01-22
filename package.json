@@ -15,12 +15,12 @@
     "browser-sync": "^2.24.7",
     "browser-sync-webpack-plugin": "^1.2.0",
     "cross-env": "^5.1",
-    "element-ui": "^2.4.6",
     "jquery": "^3.2",
     "laravel-mix": "^1.0",
     "lodash": "^4.17.4",
     "vue": "^2.5.7",
-    "zui": "^1.8.1"
+    "zui": "^1.8.1",
+    "iview": "^3.2.2"
   },
   "dependencies": {
     "node-sass": "^4.9.3"
