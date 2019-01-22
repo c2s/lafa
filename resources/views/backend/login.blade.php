@@ -250,27 +250,32 @@
                         { validator: validateCode, trigger: 'blur' }
                     ]
                 },
+                owner:''
             }
         },
         methods: {
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
+                    owner = this;
                     if (valid) {
                         axios({
                            method: 'post',
                            url: '/admin/login',
                            data: this.form,
-                           // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
                        }).then(function (response) {
-                           console.log(response);
-
+                           window.location.href = "/admin";
                         }).catch(function (error) {
-                           // alert(error.response.data.errors.captcha[0]);
-                           $Message.error(error.response.data.errors.captcha[0]);
+                            var errors = error.response.data.errors;
+                            if (errors.captcha && typeof(errors.captcha)!="undefined" && errors.captcha!=0) {
+                                owner.$Message.error(errors.captcha[0]);
+                            }
+
+                            if (errors.email && typeof(errors.email)!="undefined" && errors.email!=0) {
+                                owner.$Message.error(errors.email[0]);
+                            }
                            });
-                        // this.$Message.success('Success!');
                     } else {
-                        this.$Message.error('请检查邮箱密码是否有误!');
+                        this.$Message.error('请检查Email和密码是否有误!');
                     }
                 })
             },
