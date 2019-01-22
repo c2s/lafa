@@ -15,15 +15,14 @@
     <!-- Fonts -->
 
     <!-- Styles -->
-    {{--<link href="{{asset('plugins/zui/css/zui.min.css')}}" rel="stylesheet" type="text/css">--}}
     <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
-    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="apple-touch-icon" href="{{asset('favicon.png')}}">
 
     <style>
         body {
             background-color: #f6f5f5;
             padding-top: 0;
-            background-image: url('/images/bg_1.png');
+            background-image: url({{asset('images/bg_1.png')}});
             background-repeat:no-repeat;
             background-size:cover;
         }
@@ -98,101 +97,6 @@
         </i-col>
     </row>
 </div>
-
-
-{{--<div id="app1" class="{{ route_class() }}-page">--}}
-    {{--<div>--}}
-            {{--<div id="login">--}}
-                {{--<div class='panel-head'>--}}
-                    {{--<h4>{{ config('app.name') }}管理系统</h4>--}}
-                {{--</div>--}}
-                {{--<div class="panel-body" id="loginForm">--}}
-
-                    {{--@include('backend::layouts._message')--}}
-                    {{--@include('backend::layouts._error')--}}
-                    {{--<div class="form-con">--}}
-                        {{--<form autocomplete="off" class="ivu-form ivu-form-label-right" method="POST" action="{{ route('admin.login') }}">--}}
-                            {{--{{ csrf_field() }}--}}
-                            {{--<div class="ivu-form-item ivu-form-item-required @if ($errors->has('email')) has-error @endif"><!---->--}}
-                                {{--<div class="ivu-form-item-content">--}}
-                                    {{--<div class=" ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">--}}
-                                        {{--<div class="ivu-input-group-prepend" style=""><span><i--}}
-                                                        {{--class="ivu-icon ivu-icon-ios-person"--}}
-                                                        {{--style="font-size: 16px;"></i></span></div> <!----> <i--}}
-                                                {{--class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>--}}
-                                        {{--<input name="email" autocomplete="off" spellcheck="false" type="text" placeholder="请输入Email"--}}
-                                               {{--class="ivu-input ivu-input-default">--}}
-                                        {{--<!----></div>--}}
-                                    {{--@if ($errors->has('email'))--}}
-                                        {{--<span class="help-block">--}}
-                                {{--<strong>{{ $errors->first('email') }}</strong>--}}
-                            {{--</span>--}}
-                                {{--@endif--}}
-                                    {{--<!----></div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="ivu-form-item ivu-form-item-required @if ($errors->has('password')) has-error @endif"><!---->--}}
-                                {{--<div class="ivu-form-item-content">--}}
-                                    {{--<div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">--}}
-                                        {{--<div class="ivu-input-group-prepend" style=""><span><i--}}
-                                                        {{--class="ivu-icon ivu-icon-md-lock" style="font-size: 14px;"></i></span>--}}
-                                        {{--</div> <!----> <i--}}
-                                                {{--class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>--}}
-                                        {{--<input name="password" autocomplete="off" spellcheck="false" type="password" placeholder="请输入密码"--}}
-                                               {{--class="ivu-input ivu-input-default">--}}
-                                        {{--<!----></div>--}}
-                                    {{--@if ($errors->has('password'))--}}
-                                        {{--<span class="help-block">--}}
-                                {{--<strong>{{ $errors->first('password') }}</strong>--}}
-                            {{--</span>--}}
-                                {{--@endif--}}
-                                    {{--<!----></div>--}}
-                            {{--</div>--}}
-
-
-                            {{--<div class="ivu-form-item ivu-form-item-required @if ($errors->has('captcha')) has-error @endif"><!---->--}}
-                                {{--<div class="ivu-form-item-content">--}}
-                                    {{--<div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type ivu-input-group ivu-input-group-default ivu-input-group-with-prepend">--}}
-                                        {{--<div class="ivu-input-group-prepend" style=""><span><i--}}
-                                                        {{--class="ivu-icon ivu-icon-ios-contacts" style="font-size: 14px;"></i></span>--}}
-                                        {{--</div> <!---->--}}
-                                        {{--<i class="ivu-icon ivu-icon-ios-loading ivu-load-loop ivu-input-icon ivu-input-icon-validate"></i>--}}
-                                        {{--<input name="captcha" style="width: 200px; float:left; height: 35px"  autocomplete="off" spellcheck="false" type="text" placeholder="请输入验证码"--}}
-                                               {{--class="ivu-input ivu-input-default">--}}
-                                        {{--<div class="" style="float: right">--}}
-                                            {{--<img class="img-rounded captcha" src="{{ captcha_src('login') }}"--}}
-                                                 {{--onclick="this.src='{{ captcha_src("login") }}?'+Math.random()"--}}
-                                                 {{--title="点击图片重新获取验证码">--}}
-                                        {{--</div>--}}
-                                        {{--<!----></div>--}}
-                                    {{--@if ($errors->has('captcha'))--}}
-                                        {{--<span class="help-block">--}}
-                                {{--<strong>{{ $errors->first('captcha') }}</strong>--}}
-                            {{--</span>--}}
-                                {{--@endif--}}
-                                    {{--<!----></div>--}}
-                            {{--</div>--}}
-
-                            {{--<div class="ivu-form-item"><!---->--}}
-
-                                {{--<label> <input  type="checkbox" name='remember' {{ old('remember') ? 'checked' : '' }}>&nbsp;&nbsp;记住我</label>--}}
-                            {{--</div>--}}
-                            {{--<div class="ivu-form-item"><!---->--}}
-                                {{--<div class="ivu-form-item-content">--}}
-                                    {{--<button type="submit" class="ivu-btn ivu-btn-primary ivu-btn-long">--}}
-                                        {{--<span>登录</span></button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</form>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-        {{--<div class='notice text-center'>--}}
-        {{--</div>--}}
-    {{--</div>--}}
-
-{{--</div>--}}
 
 <!-- Scripts -->
 <script src="{{asset('js/app.js')}}"></script>
