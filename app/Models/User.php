@@ -27,18 +27,33 @@ use App\Events\BehaviorLogEvent;
  */
 class User extends Authenticatable implements JWTSubject
 {
- 
+
     use SoftDeletes;
- 
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id','name', 'phone', 'email', 'password', 'avatar', 'introduction', 'status', 'weixin_openid', 'weixin_unionid', 'weibo_id', 'qq_id', 'github_id', 'last_ip', 'last_location', 'last_at',
+        'id',
+        'name',
+        'phone',
+        'email',
+        'password',
+        'avatar',
+        'introduction',
+        'status',
+        'weixin_openid',
+        'weixin_unionid',
+        'weibo_id',
+        'qq_id',
+        'github_id',
+        'last_ip',
+        'last_location',
+        'last_at',
     ];
-    
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'last_at'];
 
     public function titleName(){

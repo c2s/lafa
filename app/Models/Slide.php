@@ -21,11 +21,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Slide extends Model
 {
     use SoftDeletes;
-    
-    protected $fillable = ['id','object_id', 'group', 'title', 'description', 'trage', 'link', 'image', 'order', 'status'];
-    
+
+    protected $fillable = [
+        'id',
+        'object_id',
+        'group',
+        'title',
+        'description',
+        'trage',
+        'link',
+        'image',
+        'order',
+        'status'
+    ];
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-    
+
     /**
      * 追加过滤条件
      *

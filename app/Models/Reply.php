@@ -21,8 +21,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Reply extends Model
 {
 //    use SoftDeletes;
-    protected $fillable = ['content'];
-    
+    protected $fillable = [
+        'content'
+    ];
+
 //    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function article()

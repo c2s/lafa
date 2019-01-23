@@ -20,7 +20,14 @@ use Illuminate\Support\Facades\Storage;
 class MultipleFile extends Model
 {
     protected $table = 'multiple_files';
-    protected $fillable = ['id','multiple_file_table_id', 'multiple_file_table_type', 'field', 'order', 'path', ];
+    protected $fillable = [
+        'id',
+        'multiple_file_table_id',
+        'multiple_file_table_type',
+        'field',
+        'order',
+        'path',
+        ];
 
     public function multiple_file_table(){
         return $this->morphTo();

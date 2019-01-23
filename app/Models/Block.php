@@ -17,13 +17,24 @@ namespace App\Models;
  */
 class Block extends Model
 {
-    protected $fillable = ['id','type', 'object_id', 'title', 'template', 'icon', 'more_title', 'more_link', 'content','created_op','updated_op'];
+    protected $fillable = [
+        'id',
+        'type',
+        'object_id',
+        'title',
+        'template',
+        'icon',
+        'more_title',
+        'more_link',
+        'content',
+        'created_op',
+        'updated_op'];
 
     public function getRouteKeyName()
     {
         return 'id';
     }
-    
+
     /**
      * 清除缓存
      *
@@ -33,9 +44,9 @@ class Block extends Model
      */
     public static function clearCache($object_id){
         $key = 'block_cache_'.$object_id;
-    
+
         \Cache::forget($key);
-    
+
         return true;
     }
 }

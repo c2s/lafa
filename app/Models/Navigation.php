@@ -22,11 +22,25 @@ use App\Events\BehaviorLogEvent;
 class Navigation extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['id','category', 'type', 'title', 'description', 'target', 'link', 'image', 'icon', 'parent', 'path', 'params', 'order', 'is_show'];
-    
+    protected $fillable = [
+        'id',
+        'category',
+        'type',
+        'title',
+        'description',
+        'target',
+        'link',
+        'image',
+        'icon',
+        'parent',
+        'path',
+        'params',
+        'order',
+        'is_show'
+    ];
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-    
-    
+
+
     public $dispatchesEvents  = [
         'saved' => BehaviorLogEvent::class,
     ];
@@ -34,7 +48,7 @@ class Navigation extends Model
     public function titleName(){
         return 'title';
     }
-    
+
     /**
      * 清除缓存
      *
@@ -46,11 +60,11 @@ class Navigation extends Model
     public static function clearCache($id, $category = 'desktop'){
         $key = 'navigation_cache_'.$category;
         \Cache::forget($key);
-    
+
         $key = 'navigation_item_cache_'.$id;
         \Cache::forget($key);
-        
+
         return true;
     }
-    
+
 }

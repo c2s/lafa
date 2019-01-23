@@ -21,12 +21,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'categorys';
-    protected $fillable = ['id','name', 'keywords', 'description', 'parent', 'order', 'path', 'type', 'link', 'template', ];
-    
+    protected $fillable = [
+        'id',
+        'name',
+        'keywords',
+        'description',
+        'parent',
+        'order',
+        'path',
+        'type',
+        'link',
+        'template',
+        ];
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-    
+
     public function articles(){
         return $this->belongsToMany(
             'App\Models\Article',
@@ -35,12 +46,12 @@ class Category extends Model
             'article_id'
         );
     }
-    
+
     /**
      * 检查是否允许删除
      */
     public function isDestroy(){
-        
+
         // 1. 检查导航中是否已使用
         $navigations = Navigation::whereIn('type', ['article', 'category'])->get();
         foreach($navigations as $navigation){
@@ -49,7 +60,7 @@ class Category extends Model
                 return '导航已使用，无法删除！'; // 找到已使用，不允许删除
             }
         }
-        
+
         // 2. 检查区块中是否已使用
         $blocks = Block::whereIn('type', ['latestArticle', 'hotArticle','latestProduct','hotProduct',])->get();
         foreach($blocks as $block){
@@ -58,19 +69,19 @@ class Category extends Model
                 return '区块已使用，无法删除！'; // 找到已使用，不允许删除
             }
         }
-        
+
         // 3. 检查是否有子分类
         $count = static::where('parent',$this->id)->count();
         if($count > 0){
             return '当前分类下有子分类，无法删除！'; // 找到已使用，不允许删除
         }
-        
+
         // 4. 检查分类下是否有文章
         $count = DB::talbe('article_category')->where('category_id',$this->id)->count();
         if($count > 0){
             return '当前分类下有内容，无法删除！'; // 找到已使用，不允许删除
         }
-        
+
         return true; // 未被使用.可以删除
     }
 
@@ -86,7 +97,7 @@ class Category extends Model
 
         return $template;
     }
-    
+
     /**
      * 删除缓存
      *
@@ -98,11 +109,11 @@ class Category extends Model
     public static function clearCache($id, $type = 'article'){
         $id      = intval($id);
         $type    = strtolower($type);
-    
+
         $key = $type.'_category_active_cache_'.$id;
-    
+
         \Cache::forget($key);
-    
+
         return true;
     }
 

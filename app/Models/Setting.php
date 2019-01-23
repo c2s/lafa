@@ -18,7 +18,11 @@ namespace App\Models;
 class Setting extends Model
 {
     protected $fillable = [
-        'owner', 'module', 'section','key','value',
+        'owner',
+        'module',
+        'section',
+        'key',
+        'value',
     ];
 
     public $timestamps = false;
@@ -50,21 +54,21 @@ class Setting extends Model
             empty($value) && $value = '';
             static::updateOrCreate(['owner'=>$owner,'module'=>$module,'section'=>$section,'key'=>$key], ['value'=> is_string($value) ? $value : json_encode($value)]);
         }
-        
+
         return static::clearCache();
     }
-    
+
     /**
      * 清除缓存
      */
     public static function clearCache(){
         $key = 'settings_cache';
-        
+
         \Cache::forget($key);
-        
+
         return true;
     }
-    
+
     /**
      * 获取所有数据
      *

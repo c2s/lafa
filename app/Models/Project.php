@@ -4,5 +4,9 @@ namespace App\Models;
 
 class Project extends Model
 {
-    protected $fillable = ['name', 'description', 'subscriber_count'];
+    protected $fillable = [
+        'name',
+        'description',
+        'subscriber_count'
+    ];
 }

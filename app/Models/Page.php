@@ -31,12 +31,35 @@ class Page extends Model
     }
 
     protected $fillable = [
-        'id', 'object_id', 'alias','title', 'subtitle', 'keywords', 'description', 'author', 'source', 'order', 'content', 'thumb', 'type', 'is_link','link', 'template', 'status', 'views', 'weight', 'css', 'js', 'top', 'created_op', 'updated_op',
+        'id',
+        'object_id',
+        'alias',
+        'title',
+        'subtitle',
+        'keywords',
+        'description',
+        'author',
+        'source',
+        'order',
+        'content',
+        'thumb',
+        'type',
+        'is_link',
+        'link',
+        'template',
+        'status',
+        'views',
+        'weight',
+        'css',
+        'js',
+        'top',
+        'created_op',
+        'updated_op',
     ];
-    
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
-    
-    
+
+
     public $dispatchesEvents  = [
         'saved' => BehaviorLogEvent::class,
     ];
@@ -69,20 +92,20 @@ class Page extends Model
         }
         return route('page.show',[$navigation_id, $this->id]);
     }
-    
+
     /**
      * 检查是否允许删除
      */
     public function isDestroy(){
         $navigations = Navigation::where('type', 'page')->get();
-        
+
         foreach($navigations as $navigation){
             $params = is_json($navigation->params) ? json_decode($navigation->params) : new \stdClass;
             if( $this->id == $params->page_id ){
                 return false; // 找到已使用，不允许删除
             }
         }
-        
+
         return true; // 未被使用.可以删除
     }
 

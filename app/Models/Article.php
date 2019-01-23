@@ -39,7 +39,7 @@ class Article extends Model
     public $asYouType = true;
 
     protected $fillable = [
-         'id',
+        'id',
         'object_id',
         'alias','title',
         'subtitle',

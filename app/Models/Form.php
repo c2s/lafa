@@ -22,9 +22,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Form extends Model
 {
     use SoftDeletes;
-    
-    protected $fillable = ['id','object_id', 'form', 'user_id', 'ip', 'location', 'data', 'status', ];
-    
+
+    protected $fillable = [
+        'id',
+        'object_id',
+        'form',
+        'user_id',
+        'ip',
+        'location',
+        'data',
+        'status',
+        ];
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function user(){
@@ -55,5 +64,5 @@ class Form extends Model
 
         return $value;
     }
-    
+
 }
