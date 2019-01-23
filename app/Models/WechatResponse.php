@@ -25,10 +25,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class WechatResponse extends Model
 {
     use SoftDeletes;
-    
+
     public $table = 'wechat_response';
-    protected $fillable = ['wechat_id', 'key', 'group', 'type', 'source', 'content'];
-    
+    protected $fillable = [
+        'wechat_id',
+        'key',
+        'group',
+        'type',
+        'source',
+        'content'
+    ];
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public $dispatchesEvents  = [

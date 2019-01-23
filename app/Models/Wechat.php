@@ -26,7 +26,19 @@ class Wechat extends Model
 
     public $table = 'wechat';
 
-    protected $fillable = ['type', 'object_id', 'name', 'account', 'app_id', 'app_secret', 'url', 'token', 'qrcode', 'primary', 'certified'];
+    protected $fillable = [
+        'type',
+        'object_id',
+        'name',
+        'account',
+        'app_id',
+        'app_secret',
+        'url',
+        'token',
+        'qrcode',
+        'primary',
+        'certified'
+    ];
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 

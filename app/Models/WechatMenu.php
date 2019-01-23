@@ -25,10 +25,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class WechatMenu extends Model
 {
     use SoftDeletes;
-    
+
     public $table = 'wechat_menu';
-    protected $fillable = ['group', 'parent', 'name', 'type', 'data', 'order'];
-    
+    protected $fillable = [
+        'group',
+        'parent',
+        'name',
+        'type',
+        'data',
+        'order'
+    ];
+
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public $dispatchesEvents  = [
