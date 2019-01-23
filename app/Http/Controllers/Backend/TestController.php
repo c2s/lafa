@@ -13,6 +13,7 @@ class TestController extends Controller
 {
     public function index()
     {
+//        dd(Auth::user());
         dd(Auth::user()->can('manage_system'));
     }
 }
