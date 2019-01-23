@@ -33,6 +33,9 @@ Route::group(['domain' => config('admin.domain'), 'prefix' => config('admin.uri'
     // 无权限提示
     Route::get('permission-denied', 'WelcomeController@permissionDenied')->name('admin.permission-denied');
 
+    Route::get('test', 'TestController@index')->name('admin.test');
+
+
 });
 
 /*
