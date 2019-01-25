@@ -5,12 +5,14 @@
  *
  * @author   mofei <root@mofei.org>
  * @link     https://github.com/imofei/lafa
+ * @date     2019-01-25 17:07:18
  */
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLinksTable extends Migration 
+class CreateLinksTable extends Migration
 {
 	public function up()
 	{
@@ -25,10 +27,10 @@ class CreateLinksTable extends Migration
             $table->string('rel')->nullable()->comment('链接与网站的关系');
             $table->integer('order')->default(999)->comment('排序');
             $table->enum("status",[0,1])->default(1)->comment('状态:1显示;0不显示');
-            
+
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->index('order','order_index');
             $table->index('status','status_index');
         });
