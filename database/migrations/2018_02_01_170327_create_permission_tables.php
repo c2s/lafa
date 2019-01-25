@@ -36,6 +36,13 @@ class CreatePermissionTables extends Migration
             $table->timestamps();
         });
 
+        Schema::create('user_has_roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user_id')->unsigned()->comment('用户id');
+            $table->integer('role_id')->unsigned()->comment('角色id');
+            $table->timestamps();
+        });
+
         Schema::create($tableNames['model_permissions'], function (Blueprint $table) use ($tableNames) {
             $table->integer('permission_id')->unsigned();
             $table->morphs('model');
@@ -94,5 +101,6 @@ class CreatePermissionTables extends Migration
         Schema::drop($tableNames['model_permissions']);
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
+        Schema::dropIfExists('user_has_roles');
     }
 }

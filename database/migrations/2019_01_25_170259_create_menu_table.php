@@ -29,7 +29,7 @@ class CreateMenuTable extends Migration
             $table->string('icon', 50)->comment('图标');
             $table->string('code', 25)->comment('菜单code');
             $table->string('route', 25)->comment('路由');
-            $table->integer('status', 1)->comment('状态');
+            $table->integer('status')->default(1)->comment('状态');
 
             $table->timestamps();
             $table->softDeletes();
