@@ -28,9 +28,8 @@
         }
         .card-main {
             position: absolute;
-            top: 30%;
+            top: 25%;
             width: 100%;
-            height: 100%;
         }
 
         .login {
@@ -46,12 +45,7 @@
 
     @yield('styles')
 </head>
-<body class="layui-container {{ route_class() }}-body bg_image">
-
-
-
-
-
+<body class="bg_image">
 
 <div id="app">
     <row class="main card-main">
