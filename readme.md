@@ -3,7 +3,7 @@
 <img src="./public/images/logo-black.png" alt="lafa" width="200px">
 </a>
 
-<p align="center">⛵<code>lafa(拉法)</code> 为WEB艺术家打造的Laravel快速开发框架. </p>
+<p align="center">⛵<code>拉法</code> 为WEB艺术家打造的Laravel快速开发框架. </p>
 
 <p align="center">
 <a href="https://lafa.mofei.org/docs">Documentation</a> |
@@ -12,142 +12,74 @@
 <a href="https://github.com/z-song/demo.lafa.mofei.org">Demo source code</a> |
 <a href="#extensions">Extensions</a>
 </p>
-
-<p align="center">
-    <a href="https://travis-ci.org/z-song/laravel-admin">
-        <img src="https://travis-ci.org/z-song/laravel-admin.svg?branch=master" alt="Build Status">
-    </a>
-    <a href="https://styleci.io/repos/48796179">
-        <img src="https://styleci.io/repos/48796179/shield" alt="StyleCI">
-    </a>
-    <a href="https://packagist.org/packages/encore/laravel-admin">
-        <img src="https://img.shields.io/packagist/l/encore/laravel-admin.svg?maxAge=2592000&&style=flat-square" alt="Packagist">
-    </a>
-    <a href="https://packagist.org/packages/encore/laravel-admin">
-        <img src="https://img.shields.io/packagist/dt/encore/laravel-admin.svg?style=flat-square" alt="Total Downloads">
-    </a>
-    <a href="https://github.com/z-song/laravel-admin">
-        <img src="https://img.shields.io/badge/Awesome-Laravel-brightgreen.svg?style=flat-square" alt="Awesome Laravel">
-    </a>
-    <a href="#backers" alt="sponsors on Open Collective">
-        <img src="https://opencollective.com/laravel-admin/backers/badge.svg" />
-    </a> 
-</div>
-
-<p align="center">
-    author: <a href="https://github.com/imofei/lafa" target="_blank">mofei</a> source <a href="https://github.com/imofei/lafa" target="_blank">lafa</a>.
+<center>
+[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
+[![Total Downloads](https://poser.pugx.org/mofei/oneone/downloads)](https://packagist.org/packages/mofei/oneone)
+[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
+[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
+[![License](https://poser.pugx.org/mofei/oneone/license)](https://packagist.org/packages/mofei/oneone)
+</center>
+<p align="center">如果觉得此开源项目不错, 还请多多Star, 以表示鼓励, 作者: 
+<a href="https://github.com/imofei" target="_blank">莫非</a>官网: 
+<a href="https://lafa.mofei.org" target="_blank">https://lafa.mofei.org</a>
 </p>
-
-截图
-------------
-
-![lafa](./public/images/lafa-admin.gif)
-
-环境要求
-------------
+<p align="center">LAFA是基于 laravel framework 5.7.1 开发的一套前后台快速开发框架，其中包含了管理后台, 用户端前台和 API 服务三部分。</p>
+## 环境要求
  - PHP >= 7.1.3
  - Laravel >= 5.7.0
  - Fileinfo PHP Extension
 
-安装使用
-------------
+## 安装使用
 
-> This package requires PHP 7+ and Laravel 5.5, for old versions please refer to [1.4](https://lafa.mofei.org/docs/v1.4/#/)
+> LAFA是基于 laravel framework 5.7.1 开发的一套前后台快速开发框架，包含了 管理后台, 前台 和 API 服务三部分。
 
-First, install laravel 5.5, and make sure that the database connection settings are correct.
-
-```
-composer require encore/laravel-admin
-```
-
-Then run these commands to publish assets and config：
+1. 将lafa代码clone到本地目录.
 
 ```
-php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
-```
-After run command you can find config file in `config/admin.php`, in this file you can change the install directory,db connection or table names.
-
-At last run following command to finish install.
-```
-php artisan admin:install
+git clone https://github.com/imofei/lafa.git && cd lafa
 ```
 
-Open `http://localhost/admin/` in browser,use username `admin` and password `admin` to login.
+2. 安装laravel5.7及第三方扩展.
 
-Configurations
-------------
-The file `config/admin.php` contains an array of configurations, you can find the default configurations in there.
+```
+composer install
+```
 
-## Extensions
+3. 确保数据库连接设置正确。
 
-| Extension                                        | Description                              | laravel-admin                              |
-| ------------------------------------------------ | ---------------------------------------- |---------------------------------------- |
-| [helpers](https://github.com/laravel-admin-extensions/helpers)             | Several tools to help you in development | ~1.5 |
-| [media-manager](https://github.com/laravel-admin-extensions/media-manager) | Provides a web interface to manage local files          | ~1.5 |
-| [api-tester](https://github.com/laravel-admin-extensions/api-tester) | Help you to test the local laravel APIs          |~1.5 |
-| [scheduling](https://github.com/laravel-admin-extensions/scheduling) | Scheduling task manager for laravel-admin          |~1.5 |
-| [redis-manager](https://github.com/laravel-admin-extensions/redis-manager) | Redis manager for laravel-admin          |~1.5 |
-| [backup](https://github.com/laravel-admin-extensions/backup) | An admin interface for managing backups          |~1.5 |
-| [log-viewer](https://github.com/laravel-admin-extensions/log-viewer) | Log viewer for laravel           |~1.5 |
-| [config](https://github.com/laravel-admin-extensions/config) | Config manager for laravel-admin          |~1.5 |
-| [reporter](https://github.com/laravel-admin-extensions/reporter) | Provides a developer-friendly web interface to view the exception          |~1.5 |
-| [wangEditor](https://github.com/laravel-admin-extensions/wangEditor) | A rich text editor based on [wangeditor](http://www.wangeditor.com/)         |~1.6 |
-| [summernote](https://github.com/laravel-admin-extensions/summernote) | A rich text editor based on [summernote](https://summernote.org/)          |~1.6 |
-| [china-distpicker](https://github.com/laravel-admin-extensions/china-distpicker) | 一个基于[distpicker](https://github.com/fengyuanchen/distpicker)的中国省市区选择器          |~1.6 |
-| [simplemde](https://github.com/laravel-admin-extensions/simplemde) | A markdow editor based on [simplemde](https://github.com/sparksuite/simplemde-markdown-editor)          |~1.6 |
-| [phpinfo](https://github.com/laravel-admin-extensions/phpinfo) | Integrate the `phpinfo` page into laravel-admin          |~1.6 |
-| [php-editor](https://github.com/laravel-admin-extensions/php-editor) <br/> [python-editor](https://github.com/laravel-admin-extensions/python-editor) <br/> [js-editor](https://github.com/laravel-admin-extensions/js-editor)<br/> [css-editor](https://github.com/laravel-admin-extensions/css-editor)<br/> [clike-editor](https://github.com/laravel-admin-extensions/clike-editor)| Several programing language editor extensions based on code-mirror          |~1.6 |
-| [star-rating](https://github.com/laravel-admin-extensions/star-rating) | Star Rating extension for laravel-admin          |~1.6 |
-| [json-editor](https://github.com/laravel-admin-extensions/json-editor) | JSON Editor for Laravel-admin          |~1.6 |
-| [grid-lightbox](https://github.com/laravel-admin-extensions/grid-lightbox) | Turn your grid into a lightbox & gallery          |~1.6 |
-| [daterangepicker](https://github.com/laravel-admin-extensions/daterangepicker) | Integrates daterangepicker into laravel-admin          |~1.6 |
-| [material-ui](https://github.com/laravel-admin-extensions/material-ui) | Material-UI extension for laravel-admin          |~1.6 |
-| [sparkline](https://github.com/laravel-admin-extensions/sparkline) | Integrates jQuery sparkline into laravel-admin          |~1.6 |
-| [chartjs](https://github.com/laravel-admin-extensions/chartjs) | Use Chartjs in laravel-admin          |~1.6 |
-| [simditor](https://github.com/laravel-admin-extensions/simditor) | Integrates simditor full-rich editor into laravel-admin          |~1.6 |
-| [cropper](https://github.com/laravel-admin-extensions/cropper) | A simple jQuery image cropping plugin.          |~1.6 |
-| [composer-viewer](https://github.com/laravel-admin-extensions/composer-viewer) | A web interface of composer packages in laravel.          |~1.6 |
+```
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+```
 
-
-## Contributors
- This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<a href="graphs/contributors"><img src="https://opencollective.com/laravel-admin/contributors.svg?width=890&button=false" /></a>
- ## Backers
- Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/laravel-admin#backer)]
- <a href="https://opencollective.com/laravel-admin#backers" target="_blank"><img src="https://opencollective.com/laravel-admin/backers.svg?width=890"></a>
- ## Sponsors
- Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/laravel-admin#sponsor)]
- <a href="https://opencollective.com/laravel-admin/sponsor/0/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/1/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/2/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/3/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/4/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/5/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/6/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/7/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/8/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/laravel-admin/sponsor/9/website" target="_blank"><img src="https://opencollective.com/laravel-admin/sponsor/9/avatar.svg"></a>
-
-Other
-------------
-`laravel-admin` based on following plugins or services:
-
-+ [Laravel](https://laravel.com/)
-+ [AdminLTE](https://almsaeedstudio.com/)
-+ [Datetimepicker](http://eonasdan.github.io/bootstrap-datetimepicker/)
-+ [font-awesome](http://fontawesome.io)
-+ [moment](http://momentjs.com/)
-+ [Google map](https://www.google.com/maps)
-+ [Tencent map](http://lbs.qq.com/)
-+ [bootstrap-fileinput](https://github.com/kartik-v/bootstrap-fileinput)
-+ [jquery-pjax](https://github.com/defunkt/jquery-pjax)
-+ [Nestable](http://dbushell.github.io/Nestable/)
-+ [toastr](http://codeseven.github.io/toastr/)
-+ [X-editable](http://github.com/vitalets/x-editable)
-+ [bootstrap-number-input](https://github.com/wpic/bootstrap-number-input)
-+ [fontawesome-iconpicker](https://github.com/itsjavi/fontawesome-iconpicker)
-+ [sweetalert2](https://github.com/sweetalert2/sweetalert2)
+打开 `http://localhost/admin/` 使用用户名 `lafa@mofei.org` 密码 `123456` 登录.
+## 后台截图
+![lafa](./public/images/lafa-admin.gif)
+## 前台截图
+![lafa](./public/images/lafa-admin.gif)
+## 已有功能
+- 系统管理
+ - 用户管理
+ - 权限管理
+ - 角色管理
+ - 菜单管理
+- 站点信息
+- 友情链接
+- 栏目导航
+- 分类管理
+- 文章管理
+- 页面管理
+- 幻灯管理
+- 微信公众号管理
+- 第三方登录
+- 用户端API
+- 文章多图，多附件管理
+- 集成文件秒传，分片上传
+- 自定义表单
+- 分词搜索
+- 万能表单
 
 License
 ------------
-`laravel-admin` is licensed under [The MIT License (MIT)](LICENSE).
+`LAFA` is licensed under [The MIT License (MIT)](LICENSE).
