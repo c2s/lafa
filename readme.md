@@ -13,15 +13,12 @@
 <a href="#extensions">Extensions</a>
 </p>
 </p>
-
 <center>
-
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/mofei/oneone/downloads)](https://packagist.org/packages/mofei/oneone)
 [![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
 [![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
 [![License](https://poser.pugx.org/mofei/oneone/license)](https://packagist.org/packages/mofei/oneone)
-
 </center>
 <p align="center">如果觉得此开源项目不错, 还请多多Star, 以表示鼓励, 作者: 
 <a href="https://github.com/imofei" target="_blank">莫非</a>官网: 
