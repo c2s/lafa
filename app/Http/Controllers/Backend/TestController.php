@@ -7,13 +7,14 @@
 namespace App\Http\Controllers\Backend;
 
 
+use App\Services\SystemService;
 use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
     public function index()
     {
-//        dd(Auth::user());
-        dd(Auth::user()->can('manage_system'));
+        $list = app(SystemService::class)->menuTree();
+        dd($list);
     }
 }

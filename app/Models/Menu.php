@@ -12,15 +12,24 @@ namespace App\Models;
 
 class Menu extends Model
 {
+
+    // 菜单状态：1:正常
+    const  NORMAL = 1;
+
+    private static $statusMap = [
+        self::NORMAL         => '正常',
+    ];
+
     protected $table = 'menu';
 
     protected $filltable = [
         'parent',
         'name',
-        'name_en',
+        'enname',
         'icon',
         'code',
         'route',
         'status',
+        'sort',
     ];
 }

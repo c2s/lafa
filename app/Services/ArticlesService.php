@@ -1,7 +1,4 @@
 <?php
-
-namespace App\Services;
-
 /**
  * LaFa - A Laravel Fast Development Framework For Web Artisans
  *
@@ -9,6 +6,8 @@ namespace App\Services;
  * @link     https://github.com/imofei/lafa
  * @date     2019-01-13 19:48
  */
+
+namespace App\Services;
 
 class ArticlesService extends BaseService
 {
