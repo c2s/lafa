@@ -1,5 +1,6 @@
 @php
     $activeNavId = app('active')->getController()::$activeNavId;
+    $menus = app(\App\Services\SystemService::class)->permissionsMenu(Auth::user()->id);
 @endphp
 
 <aside class="main-sidebar">
@@ -13,29 +14,25 @@
                 </a>
             </li>
 
-            @foreach(config('admin.menu') as $key1 => $menu)
-                @if(call_user_func($menu['permission']))
-                <li class="treeview @if($activeNavId == $menu['id']) active @endif">
+            @foreach($menus as $key1 => $menu)
+                <li class="treeview @if($activeNavId == $menu['enname']) active @endif">
                     <a href="@if(!empty($menu['link'])) {{$menu['link']}} @elseif(!empty($menu['route'])) {{route($menu['route'], $menu['params'])}}@if(!empty($menu['query']))?{{implode('&',$menu['query'])}}@endif @else javascript:; @endif">
                         <i class="icon {{ empty($menu['icon']) ? 'icon-circle-blank' : $menu['icon'] }}"></i>
-                        <span>{{ $menu['text'] }}</span>
+                        <span>{{ $menu['name'] }}</span>
                         <span class="pull-right-container">
                             <i class="icon icon-angle-left"></i>
                         </span>
                     </a>
                     <ul class="treeview-menu">
                         @foreach($menu['children'] as $key2 => $item)
-                            @if(call_user_func($item['permission']))
-                                <li id="nav_{{$key1}}_{{$key2}}" class="@if($activeNavId == $item['id']) active @endif">
-                                    <a href="@if(!empty($item['link'])){{$item['link']}}@elseif(!empty($item['route'])){{route($item['route'], $item['params'])}}@if(!empty($item['query']))?{{implode('&',$item['query'])}}@endif @else javascript:;@endif">
-                                        <i class="icon {{ empty($item['icon']) ? 'icon-circle-blank' : $item['icon'] }}"></i> {{ $item['text'] }}
-                                    </a>
-                                </li>
-                            @endif
+                            <li id="nav_{{$key1}}_{{$key2}}" class="@if($activeNavId == $item['enname']) active @endif">
+                                <a href="@if(!empty($item['link'])){{$item['link']}}@elseif(!empty($item['route'])){{route($item['route'], $item['params'])}}@if(!empty($item['query']))?{{implode('&',$item['query'])}}@endif @else javascript:;@endif">
+                                    <i class="icon {{ empty($item['icon']) ? 'icon-circle-blank' : $item['icon'] }}"></i> {{ $item['name'] }}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </li>
-                @endif
             @endforeach
 
             <!--

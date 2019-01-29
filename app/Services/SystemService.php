@@ -22,7 +22,10 @@ class SystemService extends BaseService
      */
     public function menuTree()
     {
-        $menus = Menu::query()->where('status', '=', Menu::NORMAL)->orderByDesc('sort')->get();
+        $menus = Menu::query()
+            ->where('status', '=', Menu::NORMAL)
+            ->orderByDesc('sort')
+            ->get();
         if ($menus) {
             $menus    = $menus->toArray();
             $menuTree = function ($tree, $parentId = 0) use (&$menuTree) {
@@ -80,8 +83,35 @@ class SystemService extends BaseService
         if (!$userId) {
             return [];
         }
-        $permissionsMenu = $this->permissions($userId);
-        dd($permissionsMenu);
+        $permissions = $this->permissions($userId);
+
+        if ($permissions) {
+            $menus = Menu::query()
+                ->whereIn('enname', $permissions)
+                ->where('status', '=', Menu::NORMAL)
+                ->orderByDesc('sort')
+                ->get();
+        }
+        if ($menus) {
+            $menus    = $menus->toArray();
+            $menuTree = function ($tree, $parentId = 0) use (&$menuTree) {
+                $return = array();
+                foreach ($tree as $one) {
+                    if ($one['parent'] == $parentId) {
+                        foreach ($tree as $two) {
+                            if ($two['parent'] == $one['id']) {
+                                $one['children'] = $menuTree($tree, $one['id']);
+                                break;
+                            }
+                        }
+                        $return[] = $one;
+                    }
+                }
+
+                return $return;
+            };
+            return $menuTree($menus);
+        }
         return [];
     }
 }
