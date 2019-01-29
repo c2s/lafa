@@ -6,15 +6,15 @@
 
 namespace App\Http\Controllers\Backend;
 
-
+use Auth;
 use App\Services\SystemService;
-use Illuminate\Support\Facades\Auth;
+
 
 class TestController extends Controller
 {
     public function index()
     {
-        $list = app(SystemService::class)->menuTree();
+        $list = app(SystemService::class)->permissionsMenu(Auth::user()->id);
         dd($list);
     }
 }

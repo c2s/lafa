@@ -18,5 +18,8 @@ class Model extends EloquentModel
     use WithOrderHelper;
     use WithMultipleFilesTraits;
 
-
+    public static function getTableName()
+    {
+        return with(new static)->getTable();
+    }
 }

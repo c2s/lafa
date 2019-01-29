@@ -10,13 +10,18 @@
 namespace App\Models;
 
 
-class UserHasPermissions extends Model
+class Permissions extends Model
 {
 
-    protected $table = 'user_has_roles';
+    // name前后缀
+    const  MANAGE_PREFIX = 'manage_';
+    const  FRONT_SUFFIX = 'front_';
+
+    protected $table = 'permissions';
 
     protected $filltable = [
-        'user_id',
-        'role_id'
+        'name',
+        'guard_name',
+        'remark',
     ];
 }
