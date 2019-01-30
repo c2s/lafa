@@ -29,7 +29,7 @@ class UsersController extends Controller
     {
         static::$activeNavId = 'system.users';
     }
-    
+
     /**
      * 列表
      *
@@ -40,7 +40,8 @@ class UsersController extends Controller
      */
     public function index(Request $request, User $user)
     {
-        $this->authorize('manage', $user);
+//        $this->authorize('manage', $user);
+        dd($this->authorize('manage', $user));
 
         $users = $user->withOrder($request->sortField, $request->sortOrder)->paginate(config('admin.paginate.limit'));
 
