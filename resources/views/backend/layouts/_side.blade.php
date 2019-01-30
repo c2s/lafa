@@ -16,7 +16,7 @@
 
             @foreach($menus as $key1 => $menu)
                 <li class="treeview @if($activeNavId == $menu['enname']) active @endif">
-                    <a href="@if(!empty($menu['link'])) {{$menu['link']}} @elseif(!empty($menu['route'])) {{route($menu['route'], $menu['params'])}}@if(!empty($menu['query']))?{{implode('&',$menu['query'])}}@endif @else javascript:; @endif">
+                    <a href="@if(!empty($menu['path'])) {{$menu['path']}} @else javascript:; @endif">
                         <i class="icon {{ empty($menu['icon']) ? 'icon-circle-blank' : $menu['icon'] }}"></i>
                         <span>{{ $menu['name'] }}</span>
                         <span class="pull-right-container">
@@ -26,7 +26,7 @@
                     <ul class="treeview-menu">
                         @foreach($menu['children'] as $key2 => $item)
                             <li id="nav_{{$key1}}_{{$key2}}" class="@if($activeNavId == $item['enname']) active @endif">
-                                <a href="@if(!empty($item['link'])){{$item['link']}}@elseif(!empty($item['route'])){{route($item['route'], $item['params'])}}@if(!empty($item['query']))?{{implode('&',$item['query'])}}@endif @else javascript:;@endif">
+                                <a href="@if(!empty($item['path'])){{$item['path']}} @else javascript:;@endif">
                                     <i class="icon {{ empty($item['icon']) ? 'icon-circle-blank' : $item['icon'] }}"></i> {{ $item['name'] }}
                                 </a>
                             </li>

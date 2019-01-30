@@ -26,7 +26,7 @@ class PermissionsController extends Controller
     {
         static::$activeNavId = 'system.permissions';
     }
-    
+
     /**
      * 列表
      *
@@ -37,6 +37,7 @@ class PermissionsController extends Controller
      */
     public function index(Request $request, Permission $permission)
     {
+//        dd($permission);
         $this->authorize('index', $permission);
         $permissions = $permission->paginate(config('admin.paginate.limit'));
         return backend_view('permissions.index', compact('permissions'));
