@@ -19,6 +19,29 @@ class SeedMenuData extends Migration
         Menu::create(['parent' => 1, 'name' => '权限管理', 'ename' => 'manage_permissions', 'icon' => 'icon-circle', 'code' => 'c', 'path' => 'permissions', 'sort'=> 2, 'status' => 1]);
         Menu::create(['parent' => 1, 'name' => '角色管理', 'ename' => 'manage_roles', 'icon' => 'icon-group', 'code' => 'd', 'path' => 'roles', 'sort'=> 3, 'status' => 1]);
         Menu::create(['parent' => 1, 'name' => '菜单管理', 'ename' => 'manage_menu', 'icon' => 'icon-group', 'code' => 'e', 'path' => 'menu', 'sort'=> 4, 'status' => 1]);
+
+        Menu::create(['parent' => 0, 'name' => '站点设置', 'ename' => 'manage_website', 'icon' => 'icon-sitemap', 'code' => 'e1', 'path' => '', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 5, 'name' => '站点信息', 'ename' => 'manage_website_basic', 'icon' => 'icon-ie', 'code' => 'e1', 'path' => 'site/basic', 'sort'=> 1, 'status' => 1]);
+        Menu::create(['parent' => 5, 'name' => '公司信息', 'ename' => 'manage_website_company', 'icon' => 'icon-home', 'code' => 'e1', 'path' => 'site/company', 'sort'=> 2, 'status' => 1]);
+        Menu::create(['parent' => 5, 'name' => '联系方式', 'ename' => 'manage_website_contact', 'icon' => 'icon-phone', 'code' => 'e1', 'path' => 'site/contact', 'sort'=> 3, 'status' => 1]);
+        Menu::create(['parent' => 5, 'name' => '友情链接', 'ename' => 'manage_website_link', 'icon' => 'icon-link', 'code' => 'e1', 'path' => 'site/link', 'sort'=> 4, 'status' => 1]);
+        Menu::create(['parent' => 5, 'name' => '栏目导航', 'ename' => 'manage_website_navigation', 'icon' => 'icon-th-large', 'code' => 'e1', 'path' => 'site/navigation', 'sort'=> 5, 'status' => 1]);
+
+        Menu::create(['parent' => 0, 'name' => '内容管理', 'ename' => 'manage_content', 'icon' => 'icon-bars', 'code' => 'e1', 'path' => '', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '内容分类', 'ename' => 'manage_content_category_artice', 'icon' => 'icon-list-ul', 'code' => 'e1', 'path' => 'content/category/article', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '内容管理', 'ename' => 'manage_content_article_article', 'icon' => 'icon-paste', 'code' => 'e1', 'path' => 'content/article/article', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '视频管理', 'ename' => 'manage_content_article_video', 'icon' => 'icon-play-sign', 'code' => 'e1', 'path' => 'content/category/video', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '页面管理', 'ename' => 'manage_content_page', 'icon' => 'icon-archive', 'code' => 'e1', 'path' => 'content/page', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '幻灯管理', 'ename' => 'manage_content_slide', 'icon' => 'icon-sliders', 'code' => 'e1', 'path' => 'content/slide', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '区块管理', 'ename' => 'manage_content_block', 'icon' => 'icon-check-empty', 'code' => 'e1', 'path' => 'content/block', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '图片管理', 'ename' => 'manage_content_images', 'icon' => 'icon-file-image', 'code' => 'e1', 'path' => 'content/images', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '反馈管理', 'ename' => 'manage_content_form_feedback', 'icon' => 'icon-users', 'code' => 'e1', 'path' => '', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 11, 'name' => '文件管理', 'ename' => 'manage_content_file', 'icon' => 'icon-file-image', 'code' => 'e1', 'path' => '', 'sort'=> 0, 'status' => 1]);
+
+
+        Menu::create(['parent' => 0, 'name' => '微信管理', 'ename' => 'manage_wechat', 'icon' => 'icon-bars', 'code' => 'e1', 'path' => '', 'sort'=> 0, 'status' => 1]);
+        Menu::create(['parent' => 21, 'name' => '微信设置', 'ename' => 'manage_wechat_set', 'icon' => 'icon-wechat', 'code' => 'e1', 'path' => 'website/wechat', 'sort'=> 0, 'status' => 1]);
+
     }
 
     /**
