@@ -51,6 +51,6 @@ class SeedMenuData extends Migration
      */
     public function down()
     {
-        Menu::where('id', '>', 0)->delete();
+        Menu::delete();
     }
 }

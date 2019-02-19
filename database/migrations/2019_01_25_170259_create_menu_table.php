@@ -24,14 +24,14 @@ class CreateMenuTable extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent')->default(0)->comment('父菜单');
-            $table->string('name', 25)->comment('菜单名称');
-            $table->string('enname', 25)->comment('英文名称');
+            $table->string('name', 100)->comment('菜单名称');
+            $table->string('ename', 100)->comment('英文名称');
             $table->string('icon', 50)->comment('图标');
             $table->string('code', 25)->comment('菜单code');
-            $table->string('path', 255)->comment('路径');
-            $table->string('params', 255)->comment('参数');
-            $table->integer('status')->default(1)->comment('状态');
+            $table->string('path', 255)->default('')->comment('路径');
+//            $table->string('params', 255)->comment('参数');
             $table->integer('sort')->default(0)->comment('排序');
+            $table->integer('status')->default(1)->comment('状态');
 
             $table->timestamps();
             $table->softDeletes();

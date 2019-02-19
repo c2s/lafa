@@ -22,14 +22,17 @@ class Menu extends Model
 
     protected $table = 'menu';
 
-    protected $filltable = [
+    protected $fillable = [
         'parent',
         'name',
-        'enname',
+        'ename',
         'icon',
         'code',
-        'route',
-        'status',
+        'path',
         'sort',
+        'status',
     ];
+
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
+
 }
