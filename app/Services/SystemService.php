@@ -83,11 +83,11 @@ class SystemService extends BaseService
         if (!$userId) {
             return [];
         }
+        $menus = [];
         $permissions = $this->permissions($userId);
-
         if ($permissions) {
             $menus = Menu::query()
-                ->whereIn('enname', $permissions)
+                ->whereIn('ename', $permissions)
                 ->where('status', '=', Menu::NORMAL)
                 ->orderByDesc('sort')
                 ->get();
