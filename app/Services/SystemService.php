@@ -102,6 +102,8 @@ class SystemService extends BaseService
                             if ($two['parent'] == $one['id']) {
                                 $one['children'] = $menuTree($tree, $one['id']);
                                 break;
+                            } else {
+                                $one['children'] = [];
                             }
                         }
                         $return[] = $one;

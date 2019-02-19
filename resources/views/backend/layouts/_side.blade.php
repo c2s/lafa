@@ -15,7 +15,7 @@
             </li>
 
             @foreach($menus as $key1 => $menu)
-                <li class="treeview @if($activeNavId == $menu['enname']) active @endif">
+                <li class="treeview @if($activeNavId == $menu['ename']) active @endif">
                     <a href="@if(!empty($menu['path'])) {{$menu['path']}} @else javascript:; @endif">
                         <i class="icon {{ empty($menu['icon']) ? 'icon-circle-blank' : $menu['icon'] }}"></i>
                         <span>{{ $menu['name'] }}</span>
@@ -25,7 +25,7 @@
                     </a>
                     <ul class="treeview-menu">
                         @foreach($menu['children'] as $key2 => $item)
-                            <li id="nav_{{$key1}}_{{$key2}}" class="@if($activeNavId == $item['enname']) active @endif">
+                            <li id="nav_{{$key1}}_{{$key2}}" class="@if($activeNavId == $item['ename']) active @endif">
                                 <a href="@if(!empty($item['path'])){{$item['path']}} @else javascript:;@endif">
                                     <i class="icon {{ empty($item['icon']) ? 'icon-circle-blank' : $item['icon'] }}"></i> {{ $item['name'] }}
                                 </a>
