@@ -25,7 +25,7 @@ class RolesController extends Controller
     {
         static::$activeNavId = 'system.roles';
     }
-    
+
     /**
      * 列表
      *
