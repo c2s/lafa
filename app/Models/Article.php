@@ -276,4 +276,9 @@ class Article extends Model
         return $article;
     }
 
+    public function getDate()
+    {
+        return '';
+    }
+
 }
