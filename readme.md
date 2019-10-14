@@ -87,4 +87,4 @@ php artisan storage:link
 
 License
 ------------
-`LAFA` is licensed under [The MIT License (MIT)](LICENSE).
+`LAFA` is licensed under [The MIT License (MIT)](LICENSE.txt).
