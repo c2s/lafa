@@ -41,7 +41,7 @@ Route::group(['middleware' => ['frontend'], ], function () {
 
     // 站点地图
     Route::get('map/show_{navigation}.html', 'WelcomeController@map')->name('map.index');
-    
+
     // 自定义表单
     Route::get('form/show_{navigation}_{type}.html', 'FormController@index')->name('form.index');
     Route::post('form/{type}.html', 'FormController@store')->name('form.store');
@@ -58,9 +58,13 @@ Route::group(['middleware' => ['frontend'], ], function () {
 
     // 前台认证相关路由
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    // 登录
     Route::post('login', 'Auth\LoginController@login');
+    // 注册
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+    // 注册验证
     Route::post('register', 'Auth\RegisterController@register');
+    // 重置密码
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
