@@ -66,8 +66,11 @@ Route::group(['middleware' => ['frontend'], ], function () {
     Route::post('register', 'Auth\RegisterController@register');
     // 重置密码
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+    // 找回密码
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+    // 找回密码
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    // 密码重置
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
     Route::get('user/home/{user}', 'UserController@home')->name('user.home');
     Route::get('login/{type}', 'Auth\LoginController@redirectToProvider')->name('oauth.login');
