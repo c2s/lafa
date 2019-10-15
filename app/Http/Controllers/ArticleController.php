@@ -9,10 +9,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
-use App\Models\Navigation;
 
 /**
  * 文章控制器
@@ -24,7 +22,7 @@ class ArticleController extends Controller
 {
 
     /**
-     * 分类
+     * 文章分类
      *
      * @param int $navigation
      * @param Category $articleCategory
@@ -36,12 +34,11 @@ class ArticleController extends Controller
         $category = $articleCategory;
         $articles = [];
         $articles = $articleCategory->articles()->ordered()->recent()->paginate(10);
-
         return frontend_view('category.'.$articleCategory->getTemplate('index'), compact('navigation','category','articles'));
     }
 
     /**
-     * 列表
+     * 文章列表
      *
      * @param int $navigation
      * @param Category $articleCategory
@@ -52,7 +49,6 @@ class ArticleController extends Controller
     {
         $category = $articleCategory;
         $articles = $category->articles()->active()->ordered()->recent()->paginate(10);
-
         return frontend_view('article.'.$articleCategory->getTemplate('list'), compact('navigation','category','articles'));
     }
 
@@ -68,7 +64,6 @@ class ArticleController extends Controller
     {
         $article = $safeArticle;
         $article->increment('views');
-
         return frontend_view('article.'.$article->getTemplate($category), compact('article'));
     }
 

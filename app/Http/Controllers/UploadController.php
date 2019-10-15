@@ -9,12 +9,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Illuminate\Http\Request;
 use App\Handlers\UploadHandler;
 use App\Models\Article;
 use App\Models\MultipleFile;
-use App\Models\File;
+use Auth;
+use Illuminate\Http\Request;
 
 /**
  * 文件上传控制器
@@ -46,7 +45,6 @@ class UploadController extends Controller
         if( $exists = $uploader->checkChunk($guid, $md5, $chunk) ){
             return $this->responseAjax(0,true, '已上传');
         }
-
         return $this->responseAjax(1,false, '未上传');
     }
 
@@ -131,7 +129,7 @@ class UploadController extends Controller
         }
 
     }
-    
+
     /**
      * 文件上传
      *
@@ -145,46 +143,46 @@ class UploadController extends Controller
         if ( ! in_array( $request->folder, config('filesystems.uploader.folder', []) ) ) {
             return $this->responseAjax(2,false, '非法上传，上传类型错误');
         }
-        
+
         // 判断是否有上传文件，并赋值给 $file
         if( !($file = $request->upload_file) ) {
             return $this->responseAjax(3,false, '上传文件不允许未空');
         }
-    
+
         // 获取上传的类型
         $file_type = $request->file_type ?? 'file';
-        
+
         // 检查文件大小是否合法
         if( $file->getSize() <= 0 ){
             return $this->responseAjax(7,false, '文件大小不能为: 0 ');
         }
-    
+
         if( $file->getSize() > config('filesystems.uploader.'.$file_type.'.size_limit') ){
             $message = '大小不能超过 '. byte_to_size(config('filesystems.uploader.'.$file_type.'.size_limit')) .'';
             return $this->responseAjax(8,false, $message);
         }
-        
+
         // 获取分片参数
         $chunk = request('chunk', 0);
         $chunks = request('chunks', 1);
-        
+
         // 检查是否是分片上传
         if($chunks > 1){
             $md5  = request('md5', '');
             $guid = request('guid', '');
-            
+
             $result = $uploader->saveUploadChunk($guid, $md5, $file, $chunk);
-            
+
             if($result){
                 return $this->responseAjax(0,true, '上传成功');
             }
-            
+
             return $this->responseAjax(6,false, '上传失败');
         }
-        
+
         // 保存附件到文件系统
         $result = $uploader->saveUploadFile( $file_type, intval($request->object_id ?? 0), $file, $request->folder, intval($request->editor ?? 0) );
-           
+
         // 判断是否为多图多附件上传
         if( $result && request('uploader_type', '') == 'multiple' ){
             // 处理多文件
@@ -225,7 +223,7 @@ class UploadController extends Controller
         // 上传成功
         return $this->responseAjax(0, true, '上传成功', $result['path'], $result['url'], $result['id'], $multiple_id);
     }
-    
+
     /**
      * 生成响应结构
      *
@@ -240,7 +238,7 @@ class UploadController extends Controller
      * @return array
      */
     protected function responseAjax($code = 1, $success = false, $message = '上传失败', $path = '', $url = '', $id = 0, $multiple_id = 0){
-        
+
         return [
             // 默认
             'code'              => $code,
@@ -250,20 +248,20 @@ class UploadController extends Controller
             'path'              => $path,             // 文件相对地址
             'id'                => $id,               // 文件ID
             'multiple_id'       => $multiple_id,      // 文件ID
-            
+
             // 兼容 Simditor
           # 'success'           => $success,
             'msg'               => $message,
             'file_path'         => $url,
-    
+
             // 兼容 Zui Uploader
             'result'            => $success === true ? 'ok' : 'failed',
           # 'message'           => $message,
           # 'url'               => $url,
-        
+
         ];
-        
-        
+
+
     }
 
     /**

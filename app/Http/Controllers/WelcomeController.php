@@ -9,9 +9,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Article;
-
 /**
  * 前台公共控制器
  *
@@ -42,5 +39,13 @@ class WelcomeController extends Controller
      */
     public function map(){
         return frontend_view('map');
+    }
+
+    /**
+     * 关于
+     */
+    public function about()
+    {
+
     }
 }

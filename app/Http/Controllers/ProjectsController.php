@@ -9,10 +9,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
+use App\Models\Project;
 
 class ProjectsController extends Controller
 {
@@ -53,7 +51,6 @@ class ProjectsController extends Controller
 	{
 		$this->authorize('update', $project);
 		$project->update($request->all());
-
 		return redirect()->route('projects.show', $project->id)->with('message', 'Updated successfully.');
 	}
 
@@ -61,7 +58,6 @@ class ProjectsController extends Controller
 	{
 		$this->authorize('destroy', $project);
 		$project->delete();
-
 		return redirect()->route('projects.index')->with('message', 'Deleted successfully.');
 	}
 }
