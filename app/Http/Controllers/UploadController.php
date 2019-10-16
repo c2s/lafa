@@ -265,7 +265,7 @@ class UploadController extends Controller
     }
 
     /**
-     * 图片资源
+     * 图片资源获取
      *
      * @param Request $request
      */
