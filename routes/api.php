@@ -7,8 +7,6 @@
  * @link     https://github.com/imofei/lafa
  */
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -96,6 +94,8 @@ $api->version('v1', [
 });
 
 /*
+ *
+ * version 2 API 路由
  * -----------------------------------------------------------------------
  * v2 Version API Routes
  * -----------------------------------------------------------------------
@@ -104,8 +104,7 @@ $api->version('v2', [
     'namespace' => 'App\Http\Controllers\Api\V2'
 ], function($api) {
 
-
-
+    // index
     $api->get('version', function() {
         return response('this is version v2');
     });

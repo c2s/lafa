@@ -162,7 +162,9 @@ Route::group(['domain' => config('admin.domain'), 'prefix' => config('admin.uri'
 
     // 自定义表单
     Route::get('form/{type}', 'FormController@index')->name('form.index');
+    // 表弟列表
     Route::get('form/{form}/{type}', 'FormController@show')->name('form.show');
+    // 表单操作
     Route::delete('form/{form}/{type}', 'FormController@destroy')->name('form.destroy');
 
 });
