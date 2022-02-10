@@ -23,6 +23,6 @@
     "iview": "^3.2.2"
   },
   "dependencies": {
-    "node-sass": "^4.9.3"
+    "node-sass": "^7.0.0"
   }
 }
